@@ -5,10 +5,10 @@
 class MyString
 {
 public:
-	MyString();
+	MyString() = default;
 	MyString(const char *string);
 	MyString(const char *string, int length);
-	~MyString();
+	~MyString() = default;
 
 	MyString& operator=(const MyString& other);
 	MyString& operator=(MyString&& other);
