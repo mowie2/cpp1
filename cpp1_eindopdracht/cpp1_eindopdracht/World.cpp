@@ -1,34 +1,61 @@
 #include "pch.h"
-#include "FileReader.h"
+#include "World.h"
 #include "MyString.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
-FileReader::FileReader()
+World::World()
 {
 }
 
 
-FileReader::~FileReader()
+World::~World()
 {
 }
 
-void FileReader::searchParameters(char* &par)
+int World::searchParameters(const char *par)
 {
-	par++;
-	
+	int count = strstr(par, "\r\n") - par;
+	par += count;
+	int k = 5;
+	return 0;
 }
 
-MyString FileReader::searchStringParameter(char* &par, const char * split)
+int World::searchStringParameter(const char* par, const char * split)
 {
 	int count = strstr(par, split) - par;
 	MyString parameter(par, count);
 	par += count;
-	return parameter;
+	return 0;
+}
+
+int World::load_cities(const char* par)
+{
+	int offset = 0;
+	while(*(par + offset) != '\0'&& *(par + offset) != ';')
+	{
+		offset++;
+	}
+	
+	while(*(par+offset)!='\0'&& *(par + offset)!= '\n')
+	{
+		if(*(par + offset) == ';')
+		{
+			count_cities++;
+		}
+		offset++;
+	}
+
+	if (count_cities > 0) {
+		cities = new City[count_cities];
+	}
+
+	return 0;
 }
 
 
-void FileReader::read(const char *filepath)
+void World::read(const char *filepath)
 {
 	std::ifstream is(filepath, std::ifstream::binary);
 	if (is) {
@@ -52,7 +79,8 @@ void FileReader::read(const char *filepath)
 		while (*(buffer+offset) != ';') {
 			offset++;
 		}
-
+		searchParameters((buffer+ offset));
+		load_cities(buffer);
 
 		is.close();
 		delete[] buffer;

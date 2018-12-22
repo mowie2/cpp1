@@ -6,7 +6,7 @@ class City
 public:
 	City() = default;
 
-	City(const MyString cityName) : cityName_(cityName)
+	City(const MyString &cityName) : cityName_(cityName)
 	{
 	};
 	~City() = default;

@@ -8,12 +8,14 @@ public:
 	MyString() = default;
 	MyString(const char *string);
 	MyString(const char *string, int length);
-	~MyString() = default;
+	~MyString();
 
 	MyString& operator=(const MyString& other);
 	MyString& operator=(MyString&& other);
 	MyString(const MyString& other);
 	MyString(MyString&& other);
+
+	bool equals(const MyString&other) const;
 
 	int Parse();
 

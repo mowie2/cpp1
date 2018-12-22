@@ -3,5 +3,5 @@
 
 MyString City::GetName() const
 {
-	return harborName_;
+	return cityName_;
 }

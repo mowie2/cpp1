@@ -151,15 +151,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="FileReader.h" />
-    <ClInclude Include="Harbor.h" />
+    <ClInclude Include="City.h" />
+    <ClInclude Include="World.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileReader.cpp" />
-    <ClCompile Include="Harbor.cpp" />
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="World.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="pch.cpp">

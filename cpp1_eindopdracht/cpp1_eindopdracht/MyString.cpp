@@ -2,8 +2,6 @@
 #include "MyString.h"
 #include <exception>
 
-MyString::MyString() {
-}
 
 MyString::MyString(const char *string) {
 	length = strchr(string, '\0') - string;
@@ -48,6 +46,21 @@ MyString::MyString(MyString && other)
 	this->length = other.length;
 	other.string = nullptr;
 	other.length = 0;
+}
+
+bool MyString::equals(const MyString & other) const
+{
+	if(this->length == other.length)
+	{
+		for(int i = 0;i<length;i++)
+		{
+			if(this->string[i] != other.string[i])
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 int MyString::Parse()
