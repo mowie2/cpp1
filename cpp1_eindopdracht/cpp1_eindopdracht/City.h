@@ -6,12 +6,19 @@ class City
 public:
 	City() = default;
 
-	City(const MyString &cityName) : cityName_(cityName)
+	City(const MyString &city_name) : city_name_(city_name)
 	{
 	};
-	~City() = default;
 
-	MyString GetName() const;
+	City(const City & other);
+
+	City(City && other);
+
+	City& operator=(const City & other);
+
+	City& operator=(City && other);
+
+	MyString get_name() const;
 private:
-	const MyString cityName_;
+	MyString city_name_;
 };
