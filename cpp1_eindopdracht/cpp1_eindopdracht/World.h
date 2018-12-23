@@ -6,7 +6,12 @@ class World
 {	
 public:
 	World();
+	World(const World & other) = delete;
+	World(World && other) = delete;
+	World& operator= (World & other) = delete;
+	World& operator= (World && other) = delete;
 	~World();
+
 	void read(const char * filepath);
 	int search_parameters(const char* par);
 	int search_string_parameter(const char* par, const char * split);

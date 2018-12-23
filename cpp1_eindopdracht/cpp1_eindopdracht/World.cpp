@@ -10,7 +10,6 @@ World::World()
 {
 }
 
-
 World::~World()
 {
 	delete[] cities_;
@@ -34,8 +33,6 @@ int World::search_string_parameter(const char* par, const char * split)
 
 void World::load_cities(const char* par)
 {
-
-
 	auto initial_offset = 0;
 	while(*(par + initial_offset) != '\0'&& *(par + initial_offset) != ';')
 	{
