@@ -1,4 +1,5 @@
 #pragma once
+#include "MyString.h"
 //#include "City.h" 
 
 class City;
@@ -12,12 +13,23 @@ public:
 	World& operator= (World && other) = delete;
 	~World();
 
-	void read(const char * filepath);
-	int search_parameters(const char* par);
-	int search_string_parameter(const char* par, const char * split);
-	void load_cities(const char* par);
+	void read(const char *filepath, char * &par, int &string_length);
+
+	//also reads city names
+	void load_city_distances();
+
+	//also read item names
+	void load_item_stock();
+	void load_item_prices();
+	
+	int city_index(const char* name) const;
+	int city_index(const MyString &name) const;
+	City & get_city(const int index) const;
+
+	
 private:
-	int count_cities_ = 0;
 	City * cities_;
+	int count_cities_ = 0;
+	//City * cities_ ;
 };
 

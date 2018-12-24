@@ -16,14 +16,16 @@ public:
 	MyString(MyString&& other);
 
 	bool equals(const MyString&other) const;
+	bool equals(const char* other) const;
 
 	int Parse();
 
 	char GetLetter(int index) const;
+	const char * GetString() const;
 	int GetLength() const;
 private:
 	char *string = '\0';
-	int length;
+	int length = 0;
 	void SetString(const char* string, int length);
 };
 

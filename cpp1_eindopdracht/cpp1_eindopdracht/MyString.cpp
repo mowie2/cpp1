@@ -25,9 +25,6 @@ MyString::~MyString() {
 }
 
 MyString& MyString::operator=(const MyString & other) {
-	if (this->length > 0) {
-		delete[] this->string;
-	}
 	if (this != &other) {
 		SetString(other.string, other.length);
 	}
@@ -48,6 +45,7 @@ MyString & MyString::operator=(MyString && other) {
 }
 
 MyString::MyString(const MyString & other) {
+	//ToDo::nullPointer
 	if (this->length > 0) {
 		delete[] this->string;
 	}
@@ -76,8 +74,26 @@ bool MyString::equals(const MyString & other) const
 				return false;
 			}
 		}
+		return true;
 	}
-	return true;
+	return false;
+}
+
+bool MyString::equals(const char * other) const
+{
+	const int other_length = strchr(other, '\0') - other;
+	if (this->length == other_length)
+	{
+		for (auto i = 0;i < length;i++)
+		{
+			if (this->string[i] != other[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
 }
 
 int MyString::Parse()
@@ -91,6 +107,10 @@ char MyString::GetLetter(int index) const {
 		return string[index];
 	}
 	throw std::out_of_range("out of range");
+}
+
+const char * MyString::GetString() const {
+	return string;
 }
 
 int MyString::GetLength() const {
