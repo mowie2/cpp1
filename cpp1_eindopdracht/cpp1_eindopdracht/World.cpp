@@ -15,7 +15,6 @@ World::~World()
 	delete[] cities_;
 }
 
-
 void World::load_city_distances()
 {
 	std::ifstream is(".\\Files\\afstanden tussen steden.csv", std::ifstream::binary);
@@ -35,7 +34,6 @@ void World::load_city_distances()
 
 			while (initial_offset != length && *(buffer + initial_offset) != '\n')
 			{
-				const char * k = buffer + initial_offset;
 				const auto new_offset = strchr(buffer+initial_offset,'#')-(buffer + initial_offset);
 				if (new_offset > 0) {
 					initial_offset += new_offset;
@@ -47,7 +45,6 @@ void World::load_city_distances()
 			auto parameter_offset = initial_offset+1;
 			while (parameter_offset != length && *(buffer + parameter_offset) != '\n')
 			{
-				const char * k = buffer + parameter_offset;
 				if (*(buffer + parameter_offset) == ';')
 				{
 					count_cities_++;
@@ -62,7 +59,6 @@ void World::load_city_distances()
 			parameter_offset++;
 			while (parameter_offset != length)
 			{
-				const char * k = buffer + parameter_offset;
 				if (*(buffer + parameter_offset) == ';')
 				{
 					count_col++;
@@ -85,7 +81,6 @@ void World::load_city_distances()
 				auto search_offset = 2 + initial_offset;
 				if (count_cities_ > 0) {
 					//read city name
-					const char * k = buffer + search_offset;
 					cities_ = new City[count_cities_];
 					for (auto i = 0;i < count_cities_ - 1;i++)
 					{
@@ -122,7 +117,6 @@ void World::load_city_distances()
 					}
 					auto &current_city = cities_[count_cities_ - 1];
 					const auto last_par = length - search_offset;
-					//const char * k = buffer + search_offset;
 					current_city.set_distance(count_cities_ - 1, cities_[count_cities_ - 1].get_name(), MyString(buffer + search_offset, last_par).Parse());
 					std::cout << current_city.get_distance_to(count_cities_ - 1).get_name().GetString() << std::endl;
 					std::cout << current_city.get_distance_to(count_cities_ - 1).get_distance() << std::endl;
@@ -145,7 +139,7 @@ void World::load_city_distances()
 
 void World::load_item_stock()
 {
-	std::ifstream is(".\\Files\\goederen prijzen.csv", std::ifstream::binary);
+	std::ifstream is(".\\Files\\goederen hoeveelheid.csv", std::ifstream::binary);
 	if (is) {
 		// get length of file:
 		is.seekg(0, is.end);
@@ -162,7 +156,6 @@ void World::load_item_stock()
 
 			while (initial_offset != length && *(buffer + initial_offset) != '\n')
 			{
-				const char * k = buffer + initial_offset;
 				const auto new_offset = strchr(buffer + initial_offset, '#') - (buffer + initial_offset);
 				if (new_offset > 0) {
 					initial_offset += new_offset;
@@ -175,7 +168,7 @@ void World::load_item_stock()
 			auto parameter_offset = initial_offset + 1;
 			while (parameter_offset != length && *(buffer + parameter_offset) != '\n')
 			{
-				const char * k = buffer + parameter_offset;
+				auto k = buffer + parameter_offset;
 				if (*(buffer + parameter_offset) == ';')
 				{
 					count_items++;
@@ -190,7 +183,6 @@ void World::load_item_stock()
 			parameter_offset++;
 			while (parameter_offset != length)
 			{
-				const char * k = buffer + parameter_offset;
 				if (*(buffer + parameter_offset) == ';')
 				{
 					count_col++;
@@ -240,15 +232,17 @@ void World::load_item_stock()
 					}
 					search_offset += (last_item + 2);
 
-
+					
 					//read stock
 					for (auto current_index = 0;current_index < (count_cities_ - 1);current_index++) {
-
+						auto k = buffer + search_offset;
 						auto &current_city = cities_[current_index];
 						//skip name
 						search_offset += strstr((buffer + search_offset), ";") - (buffer + search_offset) + 1;
+						k = buffer + search_offset;
 						for (auto i = 0;i < count_items - 1;i++)
 						{
+							k = buffer + search_offset;
 							auto new_offset = strstr((buffer + search_offset), "-") - (buffer + search_offset);
 							const auto min = MyString(buffer + search_offset, new_offset).Parse();
 							search_offset += (new_offset + 1);
@@ -258,6 +252,7 @@ void World::load_item_stock()
 							current_city.get_items(i).init_quantities(min, max);
 							search_offset += (new_offset + 1);
 						}
+						k = buffer + search_offset;
 						auto last_par = strstr((buffer + search_offset), "-") - (buffer + search_offset);
 						const auto min = MyString(buffer + search_offset, last_par).Parse();
 						search_offset += (last_par + 1);
@@ -280,7 +275,6 @@ void World::load_item_stock()
 						current_city.get_items(i).init_quantities(min, max);
 						search_offset += (new_offset + 1);
 					}
-					auto k = (buffer + search_offset);
 					auto last_par = strstr((buffer + search_offset), "-") - (buffer + search_offset);
 					const auto min = MyString(buffer + search_offset, last_par).Parse();
 					search_offset += (last_par + 1);
@@ -306,6 +300,136 @@ void World::load_item_stock()
 	}
 }
 
+void World::load_item_prices()
+{
+	std::ifstream is(".\\Files\\goederen prijzen.csv", std::ifstream::binary);
+	if (is) {
+		// get length of file:
+		is.seekg(0, is.end);
+		const int length = is.tellg();
+		is.seekg(0, is.beg);
+		char * buffer = new char[length];
+		is.read(buffer, length);
+
+		if (is) {
+			std::cout << "all characters read successfully." << std::endl;
+
+			auto initial_offset = 0;
+
+
+			while (initial_offset != length && *(buffer + initial_offset) != '\n')
+			{
+				const auto new_offset = strchr(buffer + initial_offset, '#') - (buffer + initial_offset);
+				if (new_offset > 0) {
+					initial_offset += new_offset;
+				}
+				initial_offset++;
+			}
+
+			//count amount of items
+			auto count_items = 0;
+			auto parameter_offset = initial_offset + 1;
+			while (parameter_offset != length && *(buffer + parameter_offset) != '\n')
+			{
+				if (*(buffer + parameter_offset) == ';')
+				{
+					count_items++;
+				}
+				parameter_offset++;
+			}
+
+			//check if file is in right format
+			auto good = true;
+			auto count_rows = 0;
+			auto count_col = 0;
+			parameter_offset++;
+			while (parameter_offset != length)
+			{
+				if (*(buffer + parameter_offset) == ';')
+				{
+					count_col++;
+				}
+				if (*(buffer + parameter_offset) == '\n')
+				{
+					if (count_col != count_items)
+					{
+						good = false;
+						break;
+					}
+					count_rows++;
+					count_col = 0;
+				}
+				parameter_offset++;
+			}
+
+			//if file is in right format
+			if (good && count_rows == count_cities_) {
+				auto search_offset = 2 + initial_offset;
+				if (count_items > 0) {
+
+					//read stock
+					for (auto current_index = 0;current_index < (count_cities_ - 1);current_index++) {
+
+						auto &current_city = cities_[current_index];
+						//skip name
+						search_offset += strstr((buffer + search_offset), ";") - (buffer + search_offset) + 1;
+						for (auto i = 0;i < count_items - 1;i++)
+						{
+							auto new_offset = strstr((buffer + search_offset), "-") - (buffer + search_offset);
+							const auto min = MyString(buffer + search_offset, new_offset).Parse();
+							search_offset += (new_offset + 1);
+
+							new_offset = strstr((buffer + search_offset), ";") - (buffer + search_offset);
+							const auto max = MyString(buffer + search_offset, new_offset).Parse();
+							current_city.get_items(i).set_prices(min, max);
+							search_offset += (new_offset + 1);
+						}
+						auto last_par = strstr((buffer + search_offset), "-") - (buffer + search_offset);
+						const auto min = MyString(buffer + search_offset, last_par).Parse();
+						search_offset += (last_par + 1);
+
+						last_par = strstr((buffer + search_offset), "\r\n") - (buffer + search_offset);
+						const auto max = MyString(buffer + search_offset, last_par).Parse();
+						current_city.get_items(count_items - 1).set_prices(min, max);
+						search_offset += (last_par + 1);
+					}
+
+					auto &current_city = cities_[count_cities_ - 1];
+					for (auto i = 0;i < count_items - 1;i++)
+					{
+						auto new_offset = strstr((buffer + search_offset), "-") - (buffer + search_offset);
+						const auto min = MyString(buffer + search_offset, new_offset).Parse();
+						search_offset += (new_offset + 1);
+
+						new_offset = strstr((buffer + search_offset), ";") - (buffer + search_offset);
+						const auto max = MyString(buffer + search_offset, new_offset).Parse();
+						current_city.get_items(i).set_prices(min, max);
+						search_offset += (new_offset + 1);
+					}
+					auto last_par = strstr((buffer + search_offset), "-") - (buffer + search_offset);
+					const auto min = MyString(buffer + search_offset, last_par).Parse();
+					search_offset += (last_par + 1);
+
+					last_par = length - search_offset;
+					const auto max = MyString(buffer + search_offset, last_par).Parse();
+					current_city.get_items(count_items - 1).set_prices(min, max);
+				}
+			}
+			else
+			{
+				std::cout << "file is not in right format";
+			}
+
+		}
+		else {
+			std::cout << "error: only " << is.gcount() << " could be read" << std::endl;
+		}
+
+		// ...buffer contains the entire file...
+		is.close();
+		delete[] buffer;
+	}
+}
 
 int World::city_index(const char * name) const
 {
@@ -335,7 +459,6 @@ City & World::get_city(const int index) const
 	}
 }
 
-
 void World::read(const char *filepath, char * &par, int &string_length)
 {
 	std::ifstream is(filepath, std::ifstream::binary);
@@ -347,7 +470,6 @@ void World::read(const char *filepath, char * &par, int &string_length)
 		char * buffer = new char[length];
 		is.read(buffer, length);
 
-		int k = is.gcount();
 		if (is) {
 			std::cout << "all characters read successfully.";
 			par = new char[length];

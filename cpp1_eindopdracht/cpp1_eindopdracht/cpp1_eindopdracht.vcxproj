@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Distance.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyString.cpp" />

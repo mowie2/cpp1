@@ -5,53 +5,20 @@ class Item
 {
 public:
 	Item() = default;
-	Item(const Item&other )
-	{
-		this->name_ = other.name_;
-		this->quantity_ = other.quantity_;
-		this->max_quantity_ = other.max_quantity_;
-		this->min_quantity_ = other.min_quantity_;
-	}
-	Item& operator=(const Item&other)
-	{
-		if (this != &other) {
-			this->name_ = other.name_;
-			this->quantity_ = other.quantity_;
-			this->max_quantity_ = other.max_quantity_;
-			this->min_quantity_ = other.min_quantity_;
-		}
-		return *this;
-	}
 
-	Item(Item&&other)
-	{
-		this->name_ = std::move(other.name_);
-		this->quantity_ = other.quantity_;
-		this->max_quantity_ = other.max_quantity_;
-		this->min_quantity_ = other.min_quantity_;
-	}
-	Item& operator=(Item&&other)
-	{
-		if (this != &other) {
-			this->name_ = std::move(other.name_);
-			this->quantity_ = other.quantity_;
-			this->max_quantity_ = other.max_quantity_;
-			this->min_quantity_ = other.min_quantity_;
-		}
-		return *this;
-	}
+	Item(const Item&other);
+	
+	Item& operator=(const Item&other);
 
-	void init_quantities(int min,const int max)
-	{
-		quantity_ = 0;
-		min_quantity_ = min;
-		max_quantity_ = max;
-	}
+	Item(Item&&other);
+	
+	Item& operator=(Item&&other);
 
-	void set_name(const MyString& name)
-	{
-		this->name_ = name;
-	}
+	void init_quantities(const int min, const int max);
+
+	void set_prices(const int min, const int max);
+
+	void set_name(const MyString& name);
 
 	MyString get_name() const { return name_; }
 
@@ -62,4 +29,7 @@ private:
 	int quantity_ = 0;
 	int min_quantity_ = 0;
 	int max_quantity_ = 0;
+	int price_ = 0;
+	int min_price_ = 0;
+	int max_price_ = 0;
 };

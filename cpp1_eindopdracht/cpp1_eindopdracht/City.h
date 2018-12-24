@@ -27,8 +27,9 @@ public:
 	Item& get_items(const int index) const;
 
 	
-	Item * items_;
+	
 private:
+	Item * items_;
 	Distance * distances_;
 	MyString city_name_;
 	//Distance * distances_;
