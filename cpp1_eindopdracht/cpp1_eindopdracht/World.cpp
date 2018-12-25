@@ -13,7 +13,11 @@ World::World()
 World::~World()
 {
 	delete[] cities_;
+	delete[] ships_;
 }
+
+//TODO : loading csv files is not exception safe
+
 
 void World::load_city_distances()
 {
@@ -423,6 +427,174 @@ void World::load_item_prices()
 		}
 		else {
 			std::cout << "error: only " << is.gcount() << " could be read" << std::endl;
+		}
+
+		// ...buffer contains the entire file...
+		is.close();
+		delete[] buffer;
+	}
+}
+
+bool World::load_ships()
+{
+	std::ifstream is(".\\Files\\schepen.csv", std::ifstream::binary);
+	if (is) {
+		// get length of file:
+		is.seekg(0, is.end);
+		const int length = is.tellg();
+		is.seekg(0, is.beg);
+		char * buffer = new char[length];
+		is.read(buffer, length);
+
+		if (is) {
+			std::cout << "all characters read successfully." << std::endl;
+
+			//skip comments
+			auto search_comment_index = 0;
+			auto last_comment_index = 0;
+			auto comments_left = 0;
+			auto first_comment_index = strchr(buffer, '#') - buffer;
+			while(search_comment_index <length)
+			{
+				if(buffer[search_comment_index] == '#')
+				{
+					comments_left++;
+				} 
+				else if(comments_left > 0 && buffer[search_comment_index] == '\n')
+				{
+					comments_left--;
+					last_comment_index = search_comment_index;
+				}
+				search_comment_index++;
+			}
+
+			//if only comments
+			if(comments_left>0)
+			{
+				std::cout << "wrong data format" << std::endl;
+				return false;
+			}
+
+			//check if file contains more than header
+			const int header_offset = strchr(buffer + last_comment_index, '\n') - (buffer + last_comment_index)+1;
+			if (header_offset > length || header_offset < 0)
+			{
+				//No data;
+				std::cout << "no data in file" << std::endl;
+				return false;
+			}
+
+			//count amount headers
+			int header_cols = 1;
+			int header_index = last_comment_index;
+			while(header_index < header_offset)
+			{
+				if (buffer[header_index] == ';')
+				{
+					header_cols++;
+				}
+				header_index++;
+			}
+
+
+			//check format and empty values
+			auto rows = 1;
+			auto cols = 1;
+
+			//auto last_data_index = header_offset;
+			auto new_data_index = header_offset;
+			while(new_data_index < length)
+			{
+				//todo haal weg
+				auto k = buffer + new_data_index;
+				auto ll = buffer[new_data_index];
+				auto vv = *(buffer + new_data_index) == '\r\n';
+				int kkk = 0;
+				if(buffer[new_data_index] == ';')
+				{
+					/*if((new_data_index-last_data_index)==0)
+					{
+						std::cout << "leeg in col:" << cols << " row:" << rows << std::endl;
+						return false;
+					}*/
+					cols++;
+					//last_data_index = new_data_index + 1;
+				}
+				else if(buffer[new_data_index] == '\r')
+				{
+					/*if ((new_data_index - last_data_index) == 0)
+					{
+						std::cout << "leeg in col:" << cols << " row:" << rows << std::endl;
+						return false;
+					}*/
+					if(cols != header_cols)
+					{
+						std::cout << "mist een column" << std::endl;
+						return false;
+					}
+					cols = 1;
+					rows++;
+					//last_data_index = new_data_index + 1;
+
+				}
+				new_data_index++;
+			}
+
+
+
+			ships_ = new Ship[header_cols];
+			//search parameters
+			auto next_parameter_index = header_offset;
+			for(int s = 0 ; s<rows;s++){
+				//todo haal weg
+				auto k = buffer + next_parameter_index;
+				auto & current_ship = ships_[s];
+
+				//set type
+				auto parameter_length = strchr(buffer + next_parameter_index, ';') - (buffer + next_parameter_index);
+				k = buffer + next_parameter_index;
+				current_ship.set_type(MyString(buffer + next_parameter_index, parameter_length));
+				next_parameter_index += parameter_length+1;
+
+				//set price
+				parameter_length = strchr(buffer + next_parameter_index, ';') - (buffer + next_parameter_index);
+				k = buffer + next_parameter_index;
+				current_ship.set_price(MyString(buffer + next_parameter_index, parameter_length).Parse());
+				next_parameter_index += parameter_length + 1;
+
+				//set storage_capacity
+				parameter_length = strchr(buffer + next_parameter_index, ';') - (buffer + next_parameter_index);
+				k = buffer + next_parameter_index;
+				current_ship.set_storage_capacity(MyString(buffer + next_parameter_index, parameter_length).Parse());
+				next_parameter_index += parameter_length + 1;
+
+				//set canons
+				parameter_length = strchr(buffer + next_parameter_index, ';') - (buffer + next_parameter_index);
+				k = buffer + next_parameter_index;
+				current_ship.set_canons(MyString(buffer + next_parameter_index, parameter_length).Parse());
+				next_parameter_index += parameter_length + 1;
+
+				//set hp
+				parameter_length = strchr(buffer + next_parameter_index, ';') - (buffer + next_parameter_index);
+				k = buffer + next_parameter_index;
+				current_ship.set_hp(MyString(buffer + next_parameter_index, parameter_length).Parse());
+				next_parameter_index += parameter_length + 1;
+
+				//set misc
+				parameter_length = strchr(buffer + next_parameter_index, '\r\n') - (buffer + next_parameter_index);
+				k = buffer + next_parameter_index;
+				current_ship.set_misc(MyString(buffer + next_parameter_index, parameter_length));
+				next_parameter_index += parameter_length + 2;
+
+				//todo haal weg
+				k = buffer + next_parameter_index;
+				int vv = 0;
+			}
+
+		}
+		else {
+			std::cout << "error: only " << is.gcount() << " could be read" << std::endl;
+			return false;
 		}
 
 		// ...buffer contains the entire file...

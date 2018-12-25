@@ -1,5 +1,6 @@
 #pragma once
 #include "MyString.h"
+#include "Ship.h"
 //#include "City.h" 
 
 class City;
@@ -21,6 +22,7 @@ public:
 	//also read item names
 	void load_item_stock();
 	void load_item_prices();
+	bool load_ships();
 	
 	int city_index(const char* name) const;
 	int city_index(const MyString &name) const;
@@ -30,6 +32,7 @@ public:
 private:
 	City * cities_;
 	int count_cities_ = 0;
+	Ship * ships_;
 	//City * cities_ ;
 };
 
