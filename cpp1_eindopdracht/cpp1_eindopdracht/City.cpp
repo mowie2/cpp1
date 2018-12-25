@@ -1,7 +1,11 @@
 #include "pch.h"
 #include "City.h"
 
-MyString City::GetName() const
+MyString& City::getName() const
 {
-	return harborName_;
+	return *cityName_;
+}
+
+void City::generateItems()
+{
 }

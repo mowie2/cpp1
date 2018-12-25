@@ -1,17 +1,24 @@
 #pragma once
 #include  "MyString.h"
+#include "Inventory.h"
 
 class City
 {
 public:
 	City() = default;
 
-	City(const MyString cityName) : cityName_(cityName)
+	City(MyString* cityName) : cityName_(cityName)
 	{
 	};
 	~City() = default;
 
-	MyString GetName() const;
+	MyString& getName() const;
+
 private:
-	const MyString cityName_;
+
+	MyString* cityName_;
+	Inventory* inventory_;
+
+	void generateItems();
+
 };
