@@ -17,6 +17,7 @@ MyString::MyString(const char *string, int length) {
 }
 
 MyString::~MyString() {
+	
 	delete[] string;
 }
 
@@ -38,9 +39,26 @@ MyString & MyString::operator=(MyString && other) {
 	return *this;
 }
 
-MyString::MyString(const MyString & other) {
-	SetString(other.string, other.length);
+bool MyString::operator==(const MyString & other)
+{
+	int counter = 0;
+	for (char *inputPtr = other.string; *inputPtr; ++inputPtr)
+	{
+		if(*inputPtr != string[counter])
+		{
+			return false;
+		}
+		counter++;
+	}
+	return true;
 }
+
+MyString::MyString(const MyString & other)
+{
+	length = strchr(other.string, '\0') - other.string;
+	SetString(other.string, length);
+}
+
 
 MyString::MyString(MyString && other)
 {

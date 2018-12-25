@@ -4,10 +4,14 @@
 class Item
 {
 public:
-	Item(const MyString name, const int itemsize, int quantity) : name_(name), itemSize_(itemsize), quantity_(quantity) {};
+	Item() = default;
+	Item(MyString itemName_, int itemQuantity_, int itemSize_, int itemPrice_) 
+	: itemName(itemName_), itemSize(itemSize_), itemAmount(itemQuantity_), itemPrice(itemPrice_) {};
 	~Item() = default;
+	MyString itemName;
+	int itemSize;
+	int itemAmount;
+	int itemPrice;
 private:
-	const MyString name_;
-	const int itemSize_;
-	int quantity_;
+
 };
