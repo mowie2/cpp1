@@ -40,3 +40,13 @@ City & City::operator=(City && other)
 	}
 	return *this;
 }*/
+
+void City::set_name(const MyString& name)
+{
+	this->city_name_ = name;
+}
+
+MyString City::get_name() const
+{
+	return city_name_;
+}

@@ -39,10 +39,30 @@ Item & Item::operator=(Item && other)
 	return *this;
 }
 
+void Item::set_name(const MyString & name)
+{
+	this->name_ = name;
+}
+
+MyString Item::get_name() const
+{
+	return name_;
+}
+
 void Item::set_quantities(const int min, const int max)
 {
 	min_quantity_ = min;
 	max_quantity_ = max;
+}
+
+int Item::get_min_quantities() const
+{
+	return min_quantity_;
+}
+
+int Item::get_max_quantities() const
+{
+	return max_quantity_;
 }
 
 void Item::set_prices(const int min, const int max)
@@ -61,22 +81,7 @@ int Item::get_max_price() const
 	return max_price_;
 }
 
-void Item::set_name(const MyString & name)
+void Item::enter_city()
 {
-	this->name_ = name;
 }
 
-MyString Item::get_name() const
-{
-	return name_;
-}
-
-int Item::get_min_quantities() const
-{
-	return min_quantity_;
-}
-
-int Item::get_max_quantities() const
-{
-	return max_quantity_;
-}

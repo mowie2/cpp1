@@ -15,7 +15,8 @@ public:
 	//City& operator=(City && other);
 	//~City();
 
-	//MyString get_name() const;
+	void set_name(const MyString& name);
+	MyString get_name() const;
 
 	//void set_distance_count(const int count);
 	//void set_distance(const int index,const MyString name,const int distance);
@@ -29,12 +30,6 @@ public:
 
 	MyList<Item> items;
 	MyList<Distance> distances;
-	MyString city_name;
-	/*
 private:
-	MyList<Item> items_;
-	MyList<Distance> distances_;
 	MyString city_name_;
-	//int amount_distances_ = 0;
-	//int amount_items_ = 0;*/
 };

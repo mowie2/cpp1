@@ -5,9 +5,7 @@ template<typename T>
 class MyList
 {
 public:
-	MyList()
-	{
-	}
+	MyList() = default;
 
 	MyList(int size)
 	{

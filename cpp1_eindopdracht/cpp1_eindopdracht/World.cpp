@@ -23,7 +23,7 @@ int World::city_index(const char * name)
 {
 	for (auto i = 0; i < count_cities_;i++)
 	{
-		if (cities_[i].city_name.equals(name))
+		if (cities_[i].get_name().equals(name))
 		{
 			return i;
 		}
@@ -53,8 +53,8 @@ void World::load_cities(MyList<MyString>& cities)
 	cities_ = MyList<City>(cities.get_size() - 1);
 	for (auto c = 0; c < cities.get_size() - 1;c++)
 	{
-		cities_[c].city_name = cities[c + 1];
-		std::cout << cities_[c].city_name.GetString() << std::endl;
+		cities_[c].set_name(cities[c + 1]);
+		std::cout << cities_[c].get_name().GetString() << std::endl;
 	}
 }
 
@@ -66,10 +66,9 @@ bool World::load_city_distances(MyList<MyList<MyString>> data)
 		cities_[r - 1].distances = MyList<Distance>(data[0].get_size());
 		for (auto c = 0;c < data[r].get_size();c++)
 		{
-			cities_[r - 1].distances[c].city_name_ = data[0][c];
-			cities_[r - 1].distances[c].distance_ = data[r][c].Parse();
-			std::cout << cities_[r - 1].distances[c].city_name_.GetString() << std::endl;
-			std::cout << cities_[r - 1].distances[c].distance_ << std::endl;
+			cities_[r - 1].distances[c] = Distance(data[0][c], data[r][c].Parse());
+			std::cout << cities_[r - 1].distances[c].get_name().GetString() << std::endl;
+			std::cout << cities_[r - 1].distances[c].get_distance() << std::endl;
 		}
 	}
 	return true;
@@ -141,12 +140,14 @@ void World::load_ships(MyList<MyList<MyString>> data)
 	ships_ = MyList<Ship>(data.get_size());
 	for (auto r = 1;r < data.get_size();r++)
 	{
-		ships_[r - 1].set_type(data[r][0]);
-		ships_[r - 1].set_price(data[r][1].Parse());
-		ships_[r - 1].set_storage_capacity(data[r][2].Parse());
-		ships_[r - 1].set_canons(data[r][3].Parse());
-		ships_[r - 1].set_hp(data[r][4].Parse());
-		ships_[r - 1].set_misc(data[r][5]);
+		ships_[r - 1] = Ship(
+			data[r][0], 
+			data[r][1].Parse(), 
+			data[r][2].Parse(), 
+			data[r][3].Parse(), 
+			data[r][4].Parse(), 
+			data[r][5]
+		);
 	}
 }
 

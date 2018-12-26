@@ -20,6 +20,8 @@ public:
 	void set_prices(const int min, const int max);
 	int get_min_price() const;
 	int get_max_price() const;
+
+	void enter_city();
 	~Item() = default;
 
 private:
