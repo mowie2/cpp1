@@ -8,7 +8,7 @@ Player::Player()
 
 bool Player::playerhasDied()
 {
-	return playerShip.getHealth() <= 0;
+	return playerShip.get_hp() <= 0;
 }
 
 bool Player::playerHas1milGold()

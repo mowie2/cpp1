@@ -180,11 +180,7 @@ void World::start()
 
 bool World::gameIsOver()
 {
-	if(player_.playerHas1milGold())
-	{
-		return true;
-	}
-	return false;
+	return player_.playerHas1milGold() || player_.playerhasDied();
 }
 
 bool World::read()
