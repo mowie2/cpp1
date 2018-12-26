@@ -151,6 +151,22 @@ void World::load_ships(MyList<MyList<MyString>> data)
 	}
 }
 
+void World::start()
+{
+	while(true)
+	{
+		if(gameIsOver())
+		{
+			return;
+		}
+	}
+}
+
+bool World::gameIsOver()
+{
+	return false;
+}
+
 bool World::read()
 {
 	//check if files are loaded

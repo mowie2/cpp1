@@ -37,6 +37,9 @@ public:
 	MyList<City> cities_;
 	int count_cities_ = 0;
 	MyList<Ship> ships_;
+
+	void start();
+	bool gameIsOver();
 private:
 	//MyList<City> cities_;
 	//int count_cities_ = 0;
