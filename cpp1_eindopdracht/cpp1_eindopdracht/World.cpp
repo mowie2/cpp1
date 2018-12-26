@@ -73,7 +73,7 @@ void World::load_cities(MyList<MyString>& cities)
 	cities_ = MyList<City>(cities.get_size() - 1);
 	for (auto c = 0; c < cities.get_size() - 1;c++)
 	{
-		cities_[c].set_name(cities[c + 1]);
+		cities_[c] = City(cities[c + 1]);
 		std::cout << cities_[c].get_name().GetString() << std::endl;
 	}
 }
@@ -101,10 +101,10 @@ void World::load_items(MyList<MyString>& items)
 	}
 	else {
 		for (auto c = 0;c < cities_.get_size();c++) {
-			cities_[c].items = MyList<CityStock>(items.get_size()-1);
+			cities_[c].items = MyList<ItemStock>(items.get_size()-1);
 			for (auto i = 0;i < items.get_size()-1;i++)
 			{
-				cities_[c].items[i] = CityStock(Item(items[i+1]));
+				cities_[c].items[i] = ItemStock(Item(items[i+1]));
 				std::cout << cities_[c].items[i].get_item().get_name().GetString() << std::endl;
 			}
 		}
@@ -146,6 +146,7 @@ bool World::load_item_price(MyList<MyList<MyString>> data)
 				std::cout << "no - sign found" << std::endl;
 				return false;
 			}
+			auto k = data[r + 1][c + 1];
 			const auto min = data[r+1][c+1].subset(0, index[0]).Parse();
 			const auto max = data[r+1][c+1].subset(index[0] + 1, data[r+1][c+1].GetLength()).Parse();
 			cities_[r].items[c].set_prices(min, max);

@@ -25,7 +25,7 @@ MyString& MyString::operator=(const MyString & other) {
 
 MyString & MyString::operator=(MyString && other) {
 	if (this != &other) {
-		if (this->length_ > 0) {
+		if (this->length_ >= 0) {
 			delete[] this->string_;
 		}
 		this->string_ = other.string_;
@@ -90,6 +90,31 @@ bool MyString::equals(const char * other) const
 		return true;
 	}
 	return false;
+}
+
+bool MyString::contains(const MyString & other) const
+{
+	if(this->length_>=other.length_)
+	{
+		auto index = 0;
+		for (auto l = 0;l<length_;l++)
+		{
+			if(this->string_[l]==other.string_[index])
+			{
+				index++;
+				if(index == other.length_)
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool MyString::contains(const char * other) const
+{
+	return contains(MyString(other));
 }
 
 int MyString::Parse()
@@ -162,7 +187,7 @@ void MyString::SetString(const char *string, int length) {
 	if (length < 0) {
 		throw std::exception("length may not be lower than 0");
 	}
-	if (this->length_ > 0) {
+	if (this->length_ >= 0) {
 		delete[] this->string_;
 	}
 	this->length_ = length;

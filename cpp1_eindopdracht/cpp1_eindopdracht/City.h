@@ -2,7 +2,8 @@
 #include "MyString.h"
 #include "Distance.h"
 #include "MyList.h"
-#include "CityStock.h"
+#include "ItemStock.h"
+#include "CanonStock.h"
 #include "Player.h"
 
 class City 
@@ -15,7 +16,7 @@ public:
 	//City& operator=(const City & other);
 	//City& operator=(City && other);
 	//~City();
-
+	City(const MyString& name);
 	void set_name(const MyString& name);
 	MyString get_name() const;
 
@@ -29,9 +30,10 @@ public:
 	int get_item_index();
 	//Item& get_item(const int index);
 
+	MyList<ItemStock> items;
 	void buyShip(Player& p);
-	MyList<CityStock> items;
 	MyList<Distance> distances;
 private:
+	MyList<CanonStock> canons_;
 	MyString city_name_;
 };
