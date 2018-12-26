@@ -81,10 +81,10 @@ void World::load_items(MyList<MyString>& items)
 	}
 	else {
 		for (auto c = 0;c < cities_.get_size();c++) {
-			cities_[c].items = MyList<CityStock>(items.get_size());
-			for (auto i = 1;i < items.get_size();i++)
+			cities_[c].items = MyList<CityStock>(items.get_size()-1);
+			for (auto i = 0;i < items.get_size()-1;i++)
 			{
-				cities_[c].items[i] = CityStock(Item(items[i]));
+				cities_[c].items[i] = CityStock(Item(items[i+1]));
 				std::cout << cities_[c].items[i].get_item().get_name().GetString() << std::endl;
 			}
 		}
@@ -148,6 +148,20 @@ void World::load_ships(MyList<MyList<MyString>> data)
 			data[r][4].Parse(), 
 			data[r][5]
 		);
+		std::cout << ships_[r-1].get_type().GetString() << std::endl;
+	}
+}
+
+void World::load_item_ships()
+{
+	for (auto s = 0; s < ships_.get_size();s++) {
+		ships_[s].storage = MyList<Item>(cities_[0].items.get_size());
+		for(auto i = 0;i< cities_[0].items.get_size();i++)
+		{
+			auto k = ships_[s].storage;
+			ships_[s].storage[i] = cities_[0].items[i].get_item();
+			std::cout << ships_[s].storage[i].get_name().GetString() << std::endl;
+		}
 	}
 }
 
@@ -179,14 +193,15 @@ bool World::read()
 	const auto check4 = ships.file[0].get_size() == 6;
 
 	if (check1 && check2 && check3 && check4) {
-		load_ships(ships.file);
-
 		load_cities(city_distance.file[0]);
 		load_city_distances(city_distance.file);
 		load_items(item_amount.file[0]);
 
-		load_item_amount(item_amount.file);
-		load_item_price(item_price.file);
+		load_ships(ships.file);
+		load_item_ships();
+
+		//load_item_amount(item_amount.file);
+		//load_item_price(item_price.file);
 
 	}
 	else

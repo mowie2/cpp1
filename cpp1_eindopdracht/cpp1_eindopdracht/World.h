@@ -33,6 +33,7 @@ public:
 	bool load_item_price(MyList<MyList<MyString>> data);
 
 	void load_ships(MyList<MyList<MyString>> data);
+	void load_item_ships();
 
 	MyList<City> cities_;
 	int count_cities_ = 0;
