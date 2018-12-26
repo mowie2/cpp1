@@ -10,7 +10,7 @@
 World::World()
 {
 	
-	player_.gold = 999999 + 0;
+	player_.gold = 999999 + 1;
 }
 
 World::~World()
