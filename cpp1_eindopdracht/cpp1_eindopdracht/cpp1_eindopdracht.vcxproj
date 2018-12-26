@@ -156,6 +156,7 @@
     <ClInclude Include="Distance.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="MyList.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MyRandom.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Distance.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="main.cpp" />

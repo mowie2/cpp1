@@ -15,6 +15,7 @@ File::~File()
 
 bool File::init(const char * file_path)
 {
+	
 	std::ifstream is(file_path, std::ifstream::binary);
 	if (is) {
 		// get length of file:
@@ -115,15 +116,12 @@ bool File::init(const char * file_path)
 				auto row = MyList<MyString>(col);
 				for(auto c = 0;c<row_col - 1;c++)
 				{
-					//todo
-					int k = r - start_row;
 					const auto end_index = col_index[c];
 					row[c] = temp_file[r].subset(start_index,end_index);
 					start_index = end_index+1;
 				}
 				const auto end_index = temp_file[r].GetLength();
 				row[row_col - 1] = temp_file[r].subset(start_index, end_index);
-				start_index = end_index+1;
 				temp_file_2[r-start_row] = row;
 			}
 

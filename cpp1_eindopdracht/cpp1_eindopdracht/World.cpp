@@ -9,6 +9,8 @@
 
 World::World()
 {
+	
+	player_.gold = 1000000;
 }
 
 World::~World()
@@ -164,6 +166,10 @@ void World::start()
 
 bool World::gameIsOver()
 {
+	if(player_.playerHas1milGold())
+	{
+		return true;
+	}
 	return false;
 }
 

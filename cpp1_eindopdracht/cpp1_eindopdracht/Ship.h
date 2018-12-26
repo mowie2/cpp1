@@ -8,6 +8,7 @@ public:
 	Ship() = default;
 	Ship(const MyString & type, const int price, const int capacity, const int canons, const int hp, const MyString& misc);
 	~Ship() = default;
+	int getHealth();
 private:
 	MyString type_;
 	int price_ = 0;

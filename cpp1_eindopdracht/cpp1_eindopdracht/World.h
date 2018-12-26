@@ -4,6 +4,7 @@
 #include "City.h" 
 #include "MyList.h"
 #include "File.h"
+#include "Player.h"
 
 class World
 {
@@ -24,6 +25,20 @@ public:
 	int city_index(const MyString &name);
 	City & get_city(const int index);
 
+
+
+	MyList<City> cities_;
+	int count_cities_ = 0;
+	MyList<Ship> ships_;
+
+	void start();
+
+private:
+	//MyList<City> cities_;
+	//int count_cities_ = 0;
+	//MyList<Ship> ships_;
+	//City * cities_ ;
+	bool gameIsOver();
 	void load_cities(MyList<MyString>& cities);
 	void load_items(MyList<MyString>& items);
 
@@ -34,16 +49,6 @@ public:
 
 	void load_ships(MyList<MyList<MyString>> data);
 
-	MyList<City> cities_;
-	int count_cities_ = 0;
-	MyList<Ship> ships_;
-
-	void start();
-	bool gameIsOver();
-private:
-	//MyList<City> cities_;
-	//int count_cities_ = 0;
-	//MyList<Ship> ships_;
-	//City * cities_ ;
+	Player player_;
 };
 

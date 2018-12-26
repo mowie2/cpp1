@@ -10,3 +10,8 @@ Ship::Ship(const MyString & type, const int price, const int capacity, const int
 	this->hp_ = hp;
 	this->misc_ = misc;
 }
+
+int Ship::getHealth()
+{
+	return hp_;
+}
