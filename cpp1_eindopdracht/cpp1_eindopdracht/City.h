@@ -11,7 +11,8 @@ class City
 {
 public:
 	City() = default;
-	City(const MyString& name, MyList<Ship>);
+	City(const MyString& name,const MyList<Ship>& shipList);
+	//City(const MyString& name,const MyList<Ship>& shipList);
 	MyString get_name() const;
 
 	int get_distance_index(const MyString & city_name);

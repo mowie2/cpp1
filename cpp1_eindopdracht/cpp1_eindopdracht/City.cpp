@@ -2,7 +2,7 @@
 #include "City.h"
 #include "Player.h"
 
-City::City(const MyString& name, MyList<Ship> shipList)
+City::City(const MyString& name,const MyList<Ship>& shipList)
 {
 	shipFactory_ = ShipFactory(shipList);
 	this->city_name_ = name;
