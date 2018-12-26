@@ -10,13 +10,29 @@
 World::World()
 {
 	
-	player_.gold = 1000000;
+	player_.gold = 999999 + 0;
 }
 
 World::~World()
 {
 	//delete[] cities_;
 	//delete[] ships_;
+}
+
+void World::start()
+{
+	while (true)
+	{
+		if (gameIsOver())
+		{
+			return;
+		}
+	}
+}
+
+bool World::gameIsOver()
+{
+	return player_.playerHas1milGold() || player_.playerhasDied();
 }
 
 //TODO : loading csv files is not exception safe
@@ -165,22 +181,6 @@ void World::load_item_ships()
 			std::cout << ships_[s].storage[i].get_name().GetString() << std::endl;
 		}
 	}
-}
-
-void World::start()
-{
-	while(true)
-	{
-		if(gameIsOver())
-		{
-			return;
-		}
-	}
-}
-
-bool World::gameIsOver()
-{
-	return player_.playerHas1milGold() || player_.playerhasDied();
 }
 
 bool World::read()

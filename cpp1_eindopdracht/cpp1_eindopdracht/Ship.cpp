@@ -40,3 +40,13 @@ MyString Ship::get_misc() const
 {
 	return misc_;
 }
+
+void Ship::takeDamage(const int damageAmount)
+{
+	hp_ -= damageAmount;
+
+	if(hp_ < 0)
+	{
+		hp_ = 0;
+	}
+}

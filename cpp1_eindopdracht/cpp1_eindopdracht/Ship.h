@@ -15,7 +15,7 @@ public:
 	int get_canons() const;
 	int get_hp() const;
 	MyString get_misc() const;
-
+	void takeDamage(const int damageAmount);
 	MyList<Item> storage;
 private:
 	MyString type_;
