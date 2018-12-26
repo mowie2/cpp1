@@ -1,5 +1,6 @@
 #pragma once
 #include "MyString.h"
+#include "Item.h"
 
 class  Ship
 {
@@ -13,5 +14,6 @@ private:
 	int storage_capacity_ = 0;
 	int canons_ = 0;
 	int hp_ = 0;
+	MyList<Item> storage_;
 	MyString misc_;
 };

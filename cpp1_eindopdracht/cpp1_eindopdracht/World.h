@@ -27,11 +27,10 @@ public:
 	void load_cities(MyList<MyString>& cities);
 	void load_items(MyList<MyString>& items);
 
-	//todo wordt nog niet gecheck of cities of items bestaan
-	//todo not exception safe{
+	//todo wordt nog niet gecheck of cities of items bestaan. not exception safe
 	bool load_item_amount(MyList<MyList<MyString>> data);
+	//todo wordt nog niet gecheck of cities of items bestaan. not exception safe
 	bool load_item_price(MyList<MyList<MyString>> data);
-	//todo}
 
 	void load_ships(MyList<MyList<MyString>> data);
 
