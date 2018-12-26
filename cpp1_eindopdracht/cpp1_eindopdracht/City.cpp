@@ -1,5 +1,16 @@
 #include "pch.h"
 #include "City.h"
+
+
+City::City(const MyString& name)
+{
+	this->city_name_ = name;
+	canons_ = MyList<CanonStock>(3);
+	canons_[0] = CanonStock(Canon("licht", 0, 2));
+	canons_[1] = CanonStock(Canon("middelgroot", 0, 3));
+	canons_[2] = CanonStock(Canon("zwaar", 0, 6));
+}
+
 /*
 City::~City()
 {

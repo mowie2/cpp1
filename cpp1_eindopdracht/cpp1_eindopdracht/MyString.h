@@ -17,8 +17,10 @@ public:
 	MyString(const MyString& other);
 	MyString(MyString&& other);
 
-	bool equals(const MyString&other) const;
+	bool equals(const MyString& other) const;
 	bool equals(const char* other) const;
+	bool contains(const MyString &other)const;
+	bool contains(const char* other)const;
 
 	int Parse();
 

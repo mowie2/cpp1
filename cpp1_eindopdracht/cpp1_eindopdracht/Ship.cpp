@@ -1,14 +1,18 @@
 #include "pch.h"
 #include "Ship.h"
 
-Ship::Ship(const MyString & type, const int price, const int capacity, const int canons, const int hp, const MyString & misc)
+Ship::Ship(const MyString & type, const int price, const int capacity, const int max_canons, const int hp, const MyString & misc)
 {
 	this->type_ = type;
 	this->price_ = price;
-	this->storage_capacity_ = capacity;
-	this->canons_ = canons;
+	this->max_items_ = capacity;
+	this->max_canons_ = max_canons;
 	this->hp_ = hp;
 	this->misc_ = misc;
+	canons_ = MyList<Canon>(3);
+	canons_[0] = Canon("licht",0,2);
+	canons_[1] = Canon("middelgroot",0,3);
+	canons_[2] = Canon("zwaar",0,6);
 }
 
 MyString Ship::get_type() const
@@ -21,14 +25,14 @@ int Ship::get_price() const
 	return price_;
 }
 
-int Ship::get_storage_capacity() const
+int Ship::get_max_items() const
 {
-	return storage_capacity_;
+	return max_items_;
 }
 
-int Ship::get_canons() const
+int Ship::get_max_canons() const
 {
-	return canons_;
+	return max_canons_;
 }
 
 int Ship::get_hp() const
