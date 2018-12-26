@@ -152,17 +152,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="City.h" />
-    <ClInclude Include="FileReader.h" />
-    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Distance.h" />
+    <ClInclude Include="File.h" />
+    <ClInclude Include="MyList.h" />
+    <ClInclude Include="World.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MyRandom.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="City.cpp" />
-    <ClCompile Include="FileReader.cpp" />
+    <ClCompile Include="Distance.cpp" />
+    <ClCompile Include="File.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="World.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyRandom.cpp" />

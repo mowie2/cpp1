@@ -17,19 +17,20 @@ Inventory::~Inventory()
 
 void Inventory::add(MyString name, int amount)
 {
-	
+	/*
 	for (int x = 0; x < inventorySize; x++)
 	{
 		if(items_[x].itemName == name)
 		{
 			items_[x].itemAmount += amount;
 		}
-	}
+	}*/
 	
 }
 
 void Inventory::remove(MyString name, int amount)
 {
+	/*
 	for (int x = 0; x < inventorySize; x++)
 	{
 		if (items_[x].itemName == name)
@@ -41,11 +42,12 @@ void Inventory::remove(MyString name, int amount)
 				items_[x].itemAmount = 0;
 			}
 		}
-	}
+	}*/
 }
 
 void Inventory::init()
 {
+	/*
 	//TODO: dymaische maken
 	items_[0] = Item("bakstenen", 0, 0, 0);
 	items_[1] = Item("laken", 0, 0, 0);
@@ -61,5 +63,5 @@ void Inventory::init()
 	items_[11] = Item("tabak", 0, 0, 0);
 	items_[12] = Item("graan", 0, 0, 0);
 	items_[13] = Item("vlees", 0, 0, 0);
-	items_[14] = Item("hout", 0, 0, 0);
+	items_[14] = Item("hout", 0, 0, 0);*/
 }
