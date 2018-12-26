@@ -48,6 +48,7 @@ private:
 	bool load_item_price(MyList<MyList<MyString>> data);
 
 	void load_ships(MyList<MyList<MyString>> data);
+	void load_item_ships();
 
 	Player player_;
 };

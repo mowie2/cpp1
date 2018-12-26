@@ -11,7 +11,32 @@ Ship::Ship(const MyString & type, const int price, const int capacity, const int
 	this->misc_ = misc;
 }
 
-int Ship::getHealth()
+MyString Ship::get_type() const
+{
+	return type_;
+}
+
+int Ship::get_price() const
+{
+	return price_;
+}
+
+int Ship::get_storage_capacity() const
+{
+	return storage_capacity_;
+}
+
+int Ship::get_canons() const
+{
+	return canons_;
+}
+
+int Ship::get_hp() const
 {
 	return hp_;
+}
+
+MyString Ship::get_misc() const
+{
+	return misc_;
 }
