@@ -81,11 +81,11 @@ void World::load_items(MyList<MyString>& items)
 	}
 	else {
 		for (auto c = 0;c < cities_.get_size();c++) {
-			cities_[c].items = MyList<Item>(items.get_size());
+			cities_[c].items = MyList<CityStock>(items.get_size());
 			for (auto i = 1;i < items.get_size();i++)
 			{
-				cities_[c].items[i].set_name(items[i]);
-				std::cout << cities_[c].items[i].get_name().GetString() << std::endl;
+				cities_[c].items[i] = CityStock(Item(items[i]));
+				std::cout << cities_[c].items[i].get_item().get_name().GetString() << std::endl;
 			}
 		}
 	}
