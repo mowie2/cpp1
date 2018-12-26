@@ -5,14 +5,14 @@ template<typename T>
 class MyList
 {
 public:
-	MyList()  
+	MyList()
 	{
 	}
 
 	MyList(int size)
 	{
 		if (size < 0) {
-			throw td::exception("size may not be lower than 0");
+			throw std::exception("size may not be lower than 0");
 		}
 		this->size_ = size;
 		this->list_ = new T[size];
@@ -24,8 +24,8 @@ public:
 		{
 			delete[] list_;
 		}
-		list_ = new T[size_];
 		size_ = other.size_;
+		list_ = new T[size_];
 		for (auto element = 0;element < size_;element++)
 		{
 			list_[element] = other.list_[element];
@@ -41,6 +41,7 @@ public:
 		list_ = std::move(other.list_);
 		other.list_ = nullptr;
 		size_ = other.size_;
+		other.size_ = 0;
 	}
 
 	MyList & operator=(const MyList & other)
@@ -51,8 +52,8 @@ public:
 			{
 				delete[] list_;
 			}
-			list_ = new T[size_];
 			size_ = other.size_;
+			list_ = new T[size_];
 			for (auto element = 0;element < size_;element++)
 			{
 				list_[element] = other.list_[element];
@@ -72,17 +73,18 @@ public:
 			list_ = std::move(other.list_);
 			other.list_ = nullptr;
 			size_ = other.size_;
+			other.size_ = 0;
 		}
 		return *this;
 	}
 
-	~MyList(){ 
+	~MyList() {
 		delete[] list_;
 	}
 
 	T& operator[](const int index)
 	{
-		if(index >= 0 && index < size_)
+		if (index >= 0 && index < size_)
 		{
 			return list_[index];
 		}

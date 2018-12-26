@@ -1,11 +1,12 @@
 #pragma once
 #include "MyString.h"
 #include "Ship.h"
-//#include "City.h" 
+#include "City.h" 
+#include "MyList.h"
+#include "File.h"
 
-class City;
 class World
-{	
+{
 public:
 	World();
 	World(const World & other) = delete;
@@ -14,25 +15,33 @@ public:
 	World& operator= (World && other) = delete;
 	~World();
 
-	void read(const char *filepath, char * &par, int &string_length);
+	bool read();
 
-	//also reads city names
-	void load_city_distances();
+	//todo wordt nog niet gecheck of cities bestaan
+	bool load_city_distances(MyList<MyList<MyString>> data);
 
-	//also read item names
-	bool load_item_stock();
-	bool load_item_prices();
-	bool load_ships();
-	
-	int city_index(const char* name) const;
-	int city_index(const MyString &name) const;
-	City & get_city(const int index) const;
+	int city_index(const char* name);
+	int city_index(const MyString &name);
+	City & get_city(const int index);
 
-	
-private:
-	City * cities_;
+	void load_cities(MyList<MyString>& cities);
+	void load_items(MyList<MyString>& items);
+
+	//todo wordt nog niet gecheck of cities of items bestaan
+	//todo not exception safe{
+	bool load_item_amount(MyList<MyList<MyString>> data);
+	bool load_item_price(MyList<MyList<MyString>> data);
+	//todo}
+
+	void load_ships(MyList<MyList<MyString>> data);
+
+	MyList<City> cities_;
 	int count_cities_ = 0;
-	Ship * ships_;
+	MyList<Ship> ships_;
+private:
+	//MyList<City> cities_;
+	//int count_cities_ = 0;
+	//MyList<Ship> ships_;
 	//City * cities_ ;
 };
 
