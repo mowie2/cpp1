@@ -19,7 +19,7 @@ public:
 	void takeDamage(const int damageAmount);
 	MyList<Item> storage;
 private:
-	MyString size_;
+	MyString shipNameSize;
 	int price_ = 0;
 	int max_items_ = 0;
 	int max_canons_ = 0;

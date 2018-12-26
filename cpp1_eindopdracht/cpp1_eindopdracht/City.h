@@ -5,18 +5,20 @@
 #include "ItemStock.h"
 #include "CanonStock.h"
 #include "Player.h"
+#include "ShipFactory.h"
 
-class City 
+class City
 {
 public:
-	City() = default;
+	//City(MyList<Ship> shipList);
 	//City(const MyString &city_name) : city_name(city_name){};
 	//City(const City & other);
 	//City(City && other);
 	//City& operator=(const City & other);
 	//City& operator=(City && other);
 	//~City();
-	City(const MyString& name);
+	City() = default;
+	City(const MyString& name, MyList<Ship>);
 	void set_name(const MyString& name);
 	MyString get_name() const;
 
@@ -36,4 +38,5 @@ public:
 private:
 	MyList<CanonStock> canons_;
 	MyString city_name_;
+	ShipFactory shipFactory_;
 };

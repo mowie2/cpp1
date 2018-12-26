@@ -159,6 +159,8 @@
     <ClInclude Include="File.h" />
     <ClInclude Include="MyList.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="ShipFactory.h" />
     <ClInclude Include="Stock.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="World.h" />
@@ -177,6 +179,7 @@
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ShipFactory.cpp" />
     <ClCompile Include="Stock.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="Inventory.cpp" />

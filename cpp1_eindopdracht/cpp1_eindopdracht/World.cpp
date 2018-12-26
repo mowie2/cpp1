@@ -73,7 +73,7 @@ void World::load_cities(MyList<MyString>& cities)
 	cities_ = MyList<City>(cities.get_size() - 1);
 	for (auto c = 0; c < cities.get_size() - 1;c++)
 	{
-		cities_[c] = City(cities[c + 1]);
+		cities_[c] = City(cities[c + 1], ships_);
 		std::cout << cities_[c].get_name().GetString() << std::endl;
 	}
 }
@@ -214,11 +214,13 @@ bool World::read()
 	const auto check4 = ships.file[0].get_size() == 6;
 
 	if (check1 && check2 && check3 && check4) {
+		load_ships(ships.file);
+
 		load_cities(city_distance.file[0]);
 		load_city_distances(city_distance.file);
 		load_items(item_amount.file[0]);
 
-		load_ships(ships.file);
+
 		load_item_ships();
 
 		load_item_amount(item_amount.file);
