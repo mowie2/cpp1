@@ -40,6 +40,14 @@ MyString::MyString(const MyString & other) {
 	SetString(other.string_, other.length_);
 }
 
+/*
+MyString::MyString(const MyString & other)
+{
+	length = strchr(other.string, '\0') - other.string;
+	SetString(other.string, length);
+}*/
+
+
 MyString::MyString(MyString && other)
 {
 	if (this->length_ > 0) {

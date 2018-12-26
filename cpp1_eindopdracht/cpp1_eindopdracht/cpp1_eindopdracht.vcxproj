@@ -157,6 +157,8 @@
     <ClInclude Include="MyList.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="MyRandom.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Ship.h" />
@@ -167,7 +169,9 @@
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

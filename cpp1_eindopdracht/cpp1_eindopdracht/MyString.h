@@ -13,6 +13,7 @@ public:
 
 	MyString& operator=(const MyString& other);
 	MyString& operator=(MyString&& other);
+	bool operator==(const MyString& other);
 	MyString(const MyString& other);
 	MyString(MyString&& other);
 
