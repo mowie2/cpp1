@@ -18,7 +18,7 @@ public:
 
 	MyList(const MyList & other)
 	{
-		if (size_ > 0)
+		if (size_ >= 0)
 		{
 			delete[] list_;
 		}
@@ -32,7 +32,7 @@ public:
 
 	MyList(MyList && other)
 	{
-		if (size_ > 0)
+		if (size_ >= 0)
 		{
 			delete[] list_;
 		}
@@ -46,7 +46,7 @@ public:
 	{
 		if (this != &other)
 		{
-			if (size_ > 0)
+			if (size_ >= 0)
 			{
 				delete[] list_;
 			}
@@ -64,7 +64,7 @@ public:
 	{
 		if (this != &other)
 		{
-			if (size_ > 0)
+			if (size_ >= 0)
 			{
 				delete[] list_;
 			}
