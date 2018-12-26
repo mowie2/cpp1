@@ -4,20 +4,12 @@
 
 
 MyString::MyString(const char *string) {
-	if (this->length > 0) {
-		delete[] this->string;
-	}
 	length = strchr(string, '\0') - string;
 	SetString(string, length);
 }
 
-MyString::MyString(const char *string, int length) {
-	if (this->length > 0) {
-		delete[] this->string;
-	}
-	if (length > 0) {
-		SetString(string, length);
-	}
+MyString::MyString(const char *string,const int length) {
+	SetString(string, length);
 }
 
 MyString::~MyString() {
@@ -45,10 +37,6 @@ MyString & MyString::operator=(MyString && other) {
 }
 
 MyString::MyString(const MyString & other) {
-	//ToDo::nullPointer
-	if (this->length > 0) {
-		delete[] this->string;
-	}
 	SetString(other.string, other.length);
 }
 
@@ -118,6 +106,9 @@ int MyString::GetLength() const {
 
 
 void MyString::SetString(const char *string, int length) {
+	if (length < 0) {
+		throw std::exception("length may not be lower than 0");
+	}
 	if (this->length > 0) {
 		delete[] this->string;
 	}

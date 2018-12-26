@@ -20,8 +20,8 @@ public:
 	void load_city_distances();
 
 	//also read item names
-	void load_item_stock();
-	void load_item_prices();
+	bool load_item_stock();
+	bool load_item_prices();
 	bool load_ships();
 	
 	int city_index(const char* name) const;
