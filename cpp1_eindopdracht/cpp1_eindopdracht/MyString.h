@@ -22,7 +22,7 @@ public:
 
 	int Parse();
 
-	char GetLetter(int index) const;
+	char get_letter(int index) const;
 	int get_occurrence(const char search) const;
 	const char * GetString() const;
 
@@ -31,7 +31,7 @@ public:
 	int GetLength() const;
 private:
 	//todo nullptr
-	char *string_ = '\0';
+	char *string_ = nullptr;
 	int length_ = 0;
 	void SetString(const char* string, int length);
 };

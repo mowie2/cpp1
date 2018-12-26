@@ -97,7 +97,7 @@ int MyString::Parse()
 	return atoi(string_);
 }
 
-char MyString::GetLetter(int index) const {
+char MyString::get_letter(int index) const {
 	if (index < length_ && index >= 0) {
 		return string_[index];
 	}
