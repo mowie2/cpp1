@@ -1,8 +1,8 @@
 #pragma once
 #include "MyString.h"
 #include "Distance.h"
-#include "Item.h"
 #include "MyList.h"
+#include "CityStock.h"
 
 class City
 {
@@ -28,7 +28,7 @@ public:
 	int get_item_index();
 	//Item& get_item(const int index);
 
-	MyList<Item> items;
+	MyList<CityStock> items;
 	MyList<Distance> distances;
 private:
 	MyString city_name_;

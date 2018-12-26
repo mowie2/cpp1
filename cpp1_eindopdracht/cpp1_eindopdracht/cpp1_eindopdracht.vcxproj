@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="City.h" />
+    <ClInclude Include="CityStock.h" />
     <ClInclude Include="Distance.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="MyList.h" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="City.cpp" />
+    <ClCompile Include="CityStock.cpp" />
     <ClCompile Include="Distance.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Item.cpp" />
