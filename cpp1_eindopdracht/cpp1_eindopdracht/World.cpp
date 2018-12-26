@@ -9,8 +9,10 @@
 
 World::World()
 {
-	
+	read();
+	currentPlayerLocation_ = cities_[0].get_name();
 	player_.gold = 999999 + 1;
+	cities_[getCityByName("Roatan")].buyShip(player_);
 }
 
 World::~World()
@@ -39,7 +41,7 @@ bool World::gameIsOver()
 
 int World::city_index(const char * name)
 {
-	for (auto i = 0; i < count_cities_;i++)
+	for (auto i = 0; i < cities_.get_size();i++)
 	{
 		if (cities_[i].get_name().equals(name))
 		{
@@ -49,7 +51,7 @@ int World::city_index(const char * name)
 	return -1;
 }
 
-int World::city_index(const MyString & name)
+int World::getCityByName(const MyString & name)
 {
 	return city_index(name.GetString());
 }

@@ -3,7 +3,6 @@
 #include "Ship.h"
 #include "City.h" 
 #include "MyList.h"
-#include "File.h"
 #include "Player.h"
 
 class World
@@ -18,14 +17,13 @@ public:
 
 	bool read();
 
+
 	//todo wordt nog niet gecheck of cities bestaan
 	bool load_city_distances(MyList<MyList<MyString>> data);
 
 	int city_index(const char* name);
-	int city_index(const MyString &name);
+	int getCityByName(const MyString &name);
 	City & get_city(const int index);
-
-
 
 	MyList<City> cities_;
 	int count_cities_ = 0;
@@ -51,5 +49,7 @@ private:
 	void load_item_ships();
 
 	Player player_;
+
+	MyString currentPlayerLocation_;
 };
 

@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "City.h"
+#include "Player.h"
+
 /*
 City::~City()
 {
@@ -49,4 +51,11 @@ void City::set_name(const MyString& name)
 MyString City::get_name() const
 {
 	return city_name_;
+}
+
+void City::buyShip(Player& p)
+{
+	p.playerShip = Ship(
+		"light", 100, 200, 6, 1000, "geen"
+	);
 }

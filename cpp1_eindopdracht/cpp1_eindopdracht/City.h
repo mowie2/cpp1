@@ -3,8 +3,9 @@
 #include "Distance.h"
 #include "MyList.h"
 #include "CityStock.h"
+#include "Player.h"
 
-class City
+class City 
 {
 public:
 	City() = default;
@@ -28,6 +29,7 @@ public:
 	int get_item_index();
 	//Item& get_item(const int index);
 
+	void buyShip(Player& p);
 	MyList<CityStock> items;
 	MyList<Distance> distances;
 private:

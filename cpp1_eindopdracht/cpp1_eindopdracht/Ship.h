@@ -18,10 +18,10 @@ public:
 	void takeDamage(const int damageAmount);
 	MyList<Item> storage;
 private:
-	MyString type_;
+	MyString size_;
 	int price_ = 0;
 	int storage_capacity_ = 0;
 	int canons_ = 0;
 	int hp_ = 0;
-	MyString misc_;
+	MyString charteristics_;
 };

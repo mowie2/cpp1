@@ -3,17 +3,17 @@
 
 Ship::Ship(const MyString & type, const int price, const int capacity, const int canons, const int hp, const MyString & misc)
 {
-	this->type_ = type;
+	this->size_ = type;
 	this->price_ = price;
 	this->storage_capacity_ = capacity;
 	this->canons_ = canons;
 	this->hp_ = hp;
-	this->misc_ = misc;
+	this->charteristics_ = misc;
 }
 
 MyString Ship::get_type() const
 {
-	return type_;
+	return size_;
 }
 
 int Ship::get_price() const
@@ -38,7 +38,7 @@ int Ship::get_hp() const
 
 MyString Ship::get_misc() const
 {
-	return misc_;
+	return charteristics_;
 }
 
 void Ship::takeDamage(const int damageAmount)

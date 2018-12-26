@@ -157,13 +157,13 @@
     <ClInclude Include="File.h" />
     <ClInclude Include="MyList.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shop.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MyRandom.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="City.cpp" />
