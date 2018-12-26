@@ -17,17 +17,10 @@ public:
 
 	bool read();
 
-
-	//todo wordt nog niet gecheck of cities bestaan
-	bool load_city_distances(MyList<MyList<MyString>> data);
-
 	int city_index(const char* name);
 	int getCityByName(const MyString &name);
-	City & get_city(const int index);
 
-	MyList<City> cities_;
-	int count_cities_ = 0;
-	MyList<Ship> ships_;
+	
 
 	void start();
 
@@ -40,6 +33,9 @@ private:
 	void load_cities(MyList<MyString>& cities);
 	void load_items(MyList<MyString>& items);
 
+
+	//todo wordt nog niet gecheck of cities bestaan
+	bool load_city_distances(MyList<MyList<MyString>> data);
 	//todo wordt nog niet gecheck of cities of items bestaan. not exception safe
 	bool load_item_amount(MyList<MyList<MyString>> data);
 	//todo wordt nog niet gecheck of cities of items bestaan. not exception safe
@@ -49,7 +45,8 @@ private:
 	void load_item_ships();
 
 	Player player_;
-
+	MyList<City> cities_;
+	MyList<Ship> ships_;
 	MyString currentPlayerLocation_;
 };
 

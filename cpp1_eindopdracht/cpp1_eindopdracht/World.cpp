@@ -56,18 +56,6 @@ int World::getCityByName(const MyString & name)
 	return city_index(name.GetString());
 }
 
-City & World::get_city(const int index)
-{
-	if (index >= 0 && index <= count_cities_ - 1)
-	{
-		return cities_[index];
-	}
-	else
-	{
-		throw std::out_of_range("out of range");
-	}
-}
-
 void World::load_cities(MyList<MyString>& cities)
 {
 	cities_ = MyList<City>(cities.get_size() - 1);
@@ -77,7 +65,6 @@ void World::load_cities(MyList<MyString>& cities)
 		std::cout << cities_[c].get_name().GetString() << std::endl;
 	}
 }
-
 
 bool World::load_city_distances(MyList<MyList<MyString>> data)
 {
