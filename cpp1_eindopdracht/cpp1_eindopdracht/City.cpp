@@ -2,47 +2,6 @@
 #include "City.h"
 #include "Player.h"
 
-/*
-City::~City()
-{
-}
-
-City::City(const City & other)
-{
-	this->city_name = other.city_name;
-	this->distances = other.distances;
-	this->items = other.items;
-}
-
-City::City(City && other)
-{
-	this->city_name = std::move(other.city_name);
-	this->distances = std::move(other.distances);
-	this->items = std::move(other.items);
-}
-
-City & City::operator=(const City & other)
-{
-	if(this != &other)
-	{
-		this->city_name = other.city_name;
-		this->distances = other.distances;
-		this->items = other.items;
-	}
-	return *this;
-}
-
-City & City::operator=(City && other)
-{
-	if (this != &other)
-	{
-		this->city_name = std::move(other.city_name);
-		this->distances = std::move(other.distances);
-		this->items = std::move(other.items);
-	}
-	return *this;
-}*/
-
 City::City(const MyString& name, MyList<Ship> shipList)
 {
 	shipFactory_ = ShipFactory(shipList);
@@ -52,15 +11,39 @@ City::City(const MyString& name, MyList<Ship> shipList)
 	canons_[1] = CanonStock(Canon("middelgroot", 0, 3));
 	canons_[2] = CanonStock(Canon("zwaar", 0, 6));
 }
-
+/*
 void City::set_name(const MyString& name)
 {
 	this->city_name_ = name;
-}
+}*/
 
 MyString City::get_name() const
 {
 	return city_name_;
+}
+
+int City::get_distance_index(const MyString & city_name)
+{
+	for(auto c = 0;c<distances.get_size();c++)
+	{
+		if(distances[c].get_name().equals(city_name))
+		{
+			return c;
+		}
+	}
+	return -1;
+}
+
+int City::get_item_index(const MyString & item_name)
+{
+	for (auto c = 0;c < items.get_size();c++)
+	{
+		if (items[c].get_item().get_name().equals(item_name))
+		{
+			return c;
+		}
+	}
+	return -1;
 }
 
 void City::buyShip(Player& p)
