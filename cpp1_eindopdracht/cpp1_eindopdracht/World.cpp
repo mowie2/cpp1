@@ -13,8 +13,7 @@ World::World()
 	read();
 	//todo random;
 	currentPlayerLocation_ = "Roatan";
-	player_.gold = 999999;
-	//cities_[getCityByName("Roatan")].buyShip(player_);
+	player_.gold = 0 + 1;
 }
 
 World::~World()

@@ -57,11 +57,12 @@ void City::buyShip(Player& p)
 	while(true)
 	{
 		std::cout << "Which ship would you like to buy?\n";
+		std::cout << "You have: "<< p.gold << " gold to spend\n";
 		for (auto i = 1; i < shipFactory_.shipList.get_size(); i++)
 		{
 			MyString shipName = shipFactory_.shipList[i-1].get_type();
 			std::cout << "====================================\n";
-			std::cout << "\t\t"<< i << "\n";
+			std::cout << "\t\t["<< i << "]\n";
 			std::cout << "Name: " << shipName.GetString() << "\n";
 			std::cout << "Price: " << shipFactory_.shipList[i - 1].get_price() <<"\n";
 			std::cout << "Health: " << shipFactory_.shipList[i - 1].get_hp() <<"\n";
@@ -69,7 +70,11 @@ void City::buyShip(Player& p)
 			std::cout << "Cargo space: " << shipFactory_.shipList[i - 1].get_max_items() <<"\n";
 			std::cout << "misc: " << shipFactory_.shipList[i - 1].get_misc().GetString() <<"\n";
 		}
+		std::cout << "====================================\n";
+		std::cout << "\t\t[0]\n";
+		std::cout << "\t      Return\n";
 		std::cin >> cmd;
+
 		if(system( NULL))
 		{
 			system("CLS");			
@@ -78,58 +83,127 @@ void City::buyShip(Player& p)
 		{
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Please select a valid option\n";
+			continue;
+		}
+		if (cmd == 0)
+		{
+			return;
 		}
 		if (cmd < 1 || cmd > 13)
 		{
 			std::cout << "Please select a valid option\n";
 			continue;
 		}
+		switch (cmd)
+		{
+		case 1:
+			if(p.gold < shipFactory_.getPinnace().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getPinnace();
+			break;
+		case 2:
+			if (p.gold < shipFactory_.getSloep().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getSloep();
+			break;
+		case 3:
+			if (p.gold < shipFactory_.getBrigg().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getBrigg();
+			break;
+		case 4:
+			if (p.gold < shipFactory_.getBarque().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getBarque();
+			break;
+		case 5:
+			if (p.gold < shipFactory_.getKorvet().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getKorvet();
+			break;
+		case 6:
+			if (p.gold < shipFactory_.getFluyt().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getFluyt();
+			break;
+		case 7:
+			if (p.gold < shipFactory_.getFregat().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getFregat();
+			break;
+		case 8:
+			if (p.gold < shipFactory_.getGaljoen().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getGaljoen();
+			break;
+		case 9:
+			if (p.gold < shipFactory_.getHandelsFluyt().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getHandelsFluyt();
+			break;
+		case 10:
+			if (p.gold < shipFactory_.getCaravel().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getCaravel();
+			break;
+		case 11:
+			if (p.gold < shipFactory_.getCarrack().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getCarrack();
+			break;
+		case 12:
+			if (p.gold < shipFactory_.getOorlogsGaljoen().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getOorlogsGaljoen();
+			break;
+		case 13:
+			if (p.gold < shipFactory_.getShipOfTheLine().get_price())
+			{
+				std::cout << "You do not have enough gold to buy this ship \n";
+				continue;
+			}
+			p.playerShip = shipFactory_.getShipOfTheLine();
+			break;
+		}
 		break;
-	}
-
-	switch (cmd)
-	{
-	case 1:
-		p.playerShip = shipFactory_.getPinnace();
-		break;
-	case 2:
-		p.playerShip = shipFactory_.getSloep();
-		break;
-	case 3:
-		p.playerShip = shipFactory_.getBrigg();
-		break;
-	case 4:
-		p.playerShip = shipFactory_.getBarque();
-		break;
-	case 5:
-		p.playerShip = shipFactory_.getKorvet();
-		break;
-	case 6:
-		p.playerShip = shipFactory_.getFluyt();
-		break;
-	case 7:
-		p.playerShip = shipFactory_.getFregat();
-		break;
-	case 8:
-		p.playerShip = shipFactory_.getGaljoen();
-		break;
-	case 9:
-		p.playerShip = shipFactory_.getHandelsFluyt();
-		break;
-	case 10:
-		p.playerShip = shipFactory_.getCaravel();
-		break;
-	case 11:
-		p.playerShip = shipFactory_.getCaravel();
-		break;
-	case 12:
-		p.playerShip = shipFactory_.getOorlogsGaljoen();
-		break;
-	case 13:
-		p.playerShip = shipFactory_.getShipOfTheLine();
-		break;
-	}
-	
+	}	
 }
 
 Distance City::getDisance(const MyString & cityName) const
