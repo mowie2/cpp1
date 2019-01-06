@@ -11,9 +11,9 @@
 World::World()
 {
 	read();
-	//todo random;
 	currentPlayerLocation_ = "Roatan";
 	player_.gold = 0 + 1;
+	player_.playerShip = ships_[0];
 }
 
 World::~World()
