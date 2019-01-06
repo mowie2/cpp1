@@ -11,12 +11,9 @@
 World::World()
 {
 	read();
-	currentPlayerLocation_ = "sea";
-	player_.gold = 99999 + 1;
-	cities_[getCityByName("Roatan")].EnterCity();
+	currentPlayerLocation_ = "Roatan";
+	player_.gold = 0 + 1;
 	player_.playerShip = ships_[0];
-	cities_[getCityByName("Roatan")].buyItems(player_);
-	cities_[getCityByName("Roatan")].sellItems(player_);
 }
 
 World::~World()
@@ -31,6 +28,13 @@ void World::start()
 	{
 		if (gameIsOver())
 		{
+			if(player_.playerHas1milGold())
+			{
+				std::cout << "Congratulations you have 1 million gold and won the game!!!\n";
+			} else
+			{
+				std::cout << "Your ship has sunk\n";
+			}
 			return;
 		}
 
@@ -40,15 +44,147 @@ void World::start()
 		if (currentPlayerLocation_ == AT_SEA)
 		{
 			DoSeaLogic();
+		} 
+		else
+		{
+			DoCityLogic();
 		}
 	}
 }
 
 void World::DoSeaLogic()
 {
-	while (currentPlayerLocation_ != destinationPlayer_)
+	std::cin.get();
+	while (remainingDistance > 0 && !gameIsOver())
 	{
+		if (system(NULL))
+		{
+			system("CLS");
+		}
+		//std::cin.get();
+		std::cout << "Sailing towards : " << destinationPlayer_.GetString() << "\n";
+		std::cout << "Turns left : " << remainingDistance << '\n';
+		std::cout << "HP left : %" << player_.playerShip.get_hp() << "\n\n";
 		calculateEvent();
+		
+		std::cin.get();
+	}
+	currentPlayerLocation_ = destinationPlayer_;
+}
+
+void World::DoCityLogic()
+{
+	if (system(NULL))
+	{
+		system("CLS");
+	}
+	while (!gameIsOver()) {	
+		std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
+
+		std::cout << "Choose one of the following actions by entering its number" << '\n';
+		std::cout << "[1] : buy stock\n";
+		std::cout << "[2] : buy cannons\n";
+		std::cout << "[3] : buy ship\n";
+		std::cout << "[4] : sail\n";
+		//std::cout << "[0] : quit game\n";
+
+		int cmd;
+		while (true)
+		{
+			std::cin >> cmd;
+
+			if (std::cin.fail())
+			{
+				std::cout << "Please type the number of the action you would like to perform.";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+			break;
+		}
+
+		switch (cmd)
+		{
+		case 4:
+			if (SetDestination()) {
+				DoSeaLogic();
+				if (system(NULL))
+				{
+					system("CLS");
+				}
+			}
+			break;
+		default:
+			std::cout << "Please type in a valid number\n";
+			break;
+		}
+	}
+}
+
+bool World::SetDestination()
+{   
+	//print
+	if (system(NULL))
+	{
+		system("CLS");
+	}
+	std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
+
+	std::cout << "Action sail\n";
+	std::cout << "Choose one of the following destinations by entering its number" << '\n';
+	for(int i = 0;i<cities_.get_size()-1;i++)
+	{
+		std::cout << '[' << (i + 1) << "] : " << cities_[i].get_name().GetString() << '\n';
+		//////////////////////////////
+		// exception on getcitybyname
+		// exception on getdistance
+		try {
+			std::cout << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << "\n";
+		} catch(...)
+		{
+			std::cout << "error";
+			return false;
+		}
+		//////////////////////////////
+		std::cout << "====================================\n";
+	}
+	std::cout << "[0] : Return\n";
+	std::cout << "====================================\n";
+
+	//get command
+	int cmd;
+	while (true)
+	{
+		std::cin >> cmd;
+
+		if (std::cin.fail())
+		{
+			std::cout << "Please type the number of the destination\n";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+		else if(cmd == 0)
+		{
+			return false;
+		}
+		else if (cmd < 1 || cmd > cities_.get_size())
+		{
+			std::cout << "Please select a valid option\n";
+		}
+		else {
+			destinationPlayer_ = cities_[cmd - 1].get_name();
+			//////////////////////////////
+			// exception on getcitybyname
+			// exception on getdistance
+			try {
+				remainingDistance = cities_[getCityByName(currentPlayerLocation_)].getDisance(destinationPlayer_).get_distance();
+			} catch(...)
+			{
+				std::cout << "error could not get distance";
+				return false;
+			}
+			/////////////////////////////
+			return true;
+		}
 	}
 }
 
@@ -59,75 +195,206 @@ void World::calculateEvent()
 
 	if (randomNumber == 1 || randomNumber == 2)
 	{
-
+		std::cout << "There was no wind\n";
+		Geen();
 	}
 	if (randomNumber == 3 || randomNumber == 4)
 	{
+		std::cout << "There was a breeze\n";
 		Briesje();
 	}
 	if (randomNumber >= 5 && randomNumber <= 7)
 	{
+		std::cout << "The wind was weak\n";
 		Zwak();
 	}
 	if (randomNumber >= 8 && randomNumber <= 17)
 	{
+		std::cout << "The wind was normal\n";
 		Normaal();
 	}
 	if (randomNumber == 18 || randomNumber == 19)
 	{
+		std::cout << "The wind was strong\n";
 		Sterk();
 	}
 	if (randomNumber == 20)
 	{
+		std::cout << "The was a storm\n";
 		Storm();
+	}
+	int randomPirate = random.Range(1, 100);
+	if(randomPirate<=20)
+	{
+		DoCombatLogic();
+	}
+}
+
+void World::DoCombatLogic()
+{	
+	std::cout << "A random pirate ship has appeared!\n\n";
+	
+
+	MyRandom rand;
+	int index = rand.Range(0, ships_.get_size() - 1);
+	Ship pirateShip = ships_[index];
+
+	const auto fleeChance = player_.playerShip.calculateFleeChance(pirateShip);
+
+	auto fighting = true;
+	while (fighting) {
+		std::cin.get();
+		if (system(NULL))
+		{
+			system("CLS");
+		}
+		std::cout << "A random pirate ship has appeared!\n\n";
+		
+		std::cout << "Pirate ship :\n";
+		std::cout << "type : " << pirateShip.get_type().GetString() << '\n';;
+		std::cout << "hp   : " << pirateShip.get_hp() << '\n';
+		std::cout << "Amount Canons :\n";
+		std::cout << pirateShip.getHeavyCanons().getQuantity() << " : " << pirateShip.getHeavyCanons().getType().GetString() << '\n';
+		std::cout << pirateShip.getLightCanons().getQuantity() << " : " << pirateShip.getLightCanons().getType().GetString() << '\n';
+		std::cout << pirateShip.getLightCanons().getQuantity() << " : " << pirateShip.getLightCanons().getType().GetString() << '\n';
+		std::cout << "====================================\n";
+
+		std::cout << "Your ship :\n";
+		std::cout << "type : " << player_.playerShip.get_type().GetString() << '\n';;
+		std::cout << "hp   : " << player_.playerShip.get_hp() << '\n';
+		std::cout << "Amount Canons :\n";
+		std::cout << player_.playerShip.getHeavyCanons().getQuantity() << " : " << player_.playerShip.getHeavyCanons().getType().GetString() << '\n';
+		std::cout << player_.playerShip.getLightCanons().getQuantity() << " : " << player_.playerShip.getLightCanons().getType().GetString() << '\n';
+		std::cout << player_.playerShip.getLightCanons().getQuantity() << " : " << player_.playerShip.getLightCanons().getType().GetString() << '\n';
+		std::cout << "====================================\n\n";
+
+		std::cout << "Choose one of the following actions by entering its number" << '\n';
+		std::cout << "[1] : attack\n";
+		std::cout << "[2] : flee (%" << fleeChance << ")\n";
+		std::cout << "[3] : give up\n";
+
+		int cmd;
+		while (true)
+		{
+			std::cin >> cmd;
+
+			if (std::cin.fail())
+			{
+				std::cout << "Please type the number of the action you would like to perform.";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+			break;
+		}
+
+		const auto damage = player_.playerShip.calculateDamage();
+		const auto pirateDamage = pirateShip.calculateDamage();
+		const auto flee = rand.Range(1, 100);
+
+		switch (cmd)
+		{
+		case 1:
+			pirateShip.takeDamage(damage);
+			std::cout << "You did %" << pirateDamage << " damage to the pirates\n";
+			player_.playerShip.takeDamage(pirateDamage);
+			std::cout << "The pirates did %" << damage << " damage to your ship\n";
+			std::cin.get();
+			break;
+		case 2:
+			if(flee<=fleeChance)
+			{
+				std::cout << "You have successfully fled\n";
+				fighting = false;
+			}
+			else
+			{
+				std::cout << "You could not flee\n";
+				player_.playerShip.takeDamage(pirateDamage);
+				std::cout << "The pirates did %" << damage << " damage to your ship\n";
+			}
+			std::cin.get();
+			break;
+		case 3:
+			//todo steal cargo
+			std::cout << "The pirates let you go but steal all your cargo\n";
+			fighting = false;
+			std::cin.get();
+			break;
+		default:
+			std::cout << "Please type in a valid number.\n";
+			break;
+		}
+		//player_.playerShip.takeDamage(100);
+		if(pirateShip.get_hp() == 0 || player_.playerShip.get_hp() == 0)
+		{
+			fighting = false;
+		}
+
+		
 	}
 }
 
 void World::Geen()
 {
-	//TODO: implimenteer dat er niks gebeurd
+	std::cout << "The ship has not moved\n";
 }
 void World::Briesje()
 {
-	//TODO: Heeft het schip als bijzonderheid “licht” dan geldt hetzelfde effect
-	//als bij normale wind.Zo niet, dan geldt hetzelfde effect als bij geen
-	//	wind.
+	if(player_.playerShip.get_misc().contains("licht"))
+	{
+		Normaal();
+	} else
+	{
+		Geen();
+	}
 }
-
 void World::Zwak()
 {
-	//TODO:Heeft het schip als bijzonderheid “log” dan geldt hetzelfde effect
-//als bij geen wind.Zo niet, dan geldt hetzelfde effect als bij normale
-//	wind..
+	if (player_.playerShip.get_misc().contains("log"))
+	{
+		Geen();
+	}
+	else
+	{
+		Normaal();
+	}
 }
 void World::Normaal()
 {
-	//TODO:al Het schip heeft gevaren en is daarom één beurt dichter genaderd
-//tot de haven die het tot doel heeft.
+	std::cout << "The ship is one turn closer to its destination\n";
+	remainingDistance -= 1;
 }
-
 void World::Sterk()
 {
-	//TODO: Er staat zo veel wind dat het schip twee beurten dichter genaderd
-// is tot de haven die het tot doel heeft.
+	std::cout << "The ship is two turns closer to its destination\n";
+	remainingDistance -= 2;
 }
 void World::Storm()
 {
-	//TODO: Er is 40% kans dat het schip van de koers is geblazen en er één
-//beurt langer over doet om bij de haven te komen die het tot doel
-	//heeft.
-	//Er is 40 % kans dat het schip niet bewogen heeft(hetzelfde
-	//	resultaat dus als geen wind).
-	//Er is 20 % kans dat het schip de goede richting in geblazen is
-	//(hetzelfde resultaat als normale wind).
-	//Welk van voorgaande drie resultaten ook, het schip heeft sowieso
-	//averij opgelopen en verliest 1 – 100 % van zijn schadepunten.
-	//Indien het schip eindigt met 0 of minder schadepunten is het dus
-	//in de storm gezonken.
+	MyRandom random;
+	const auto randomChance = random.Range(1, 100);
+	if(randomChance<=40)
+	{
+		std::cout << "The storm had no effect\n";
+		Geen();
+	} else if(randomChance>40 && randomChance <=80)
+	{
+		std::cout << "The ship was blown out of course\n";
+		remainingDistance += 1;
+	}
+	else
+	{
+		std::cout << "The ship was blown in the right course\n";
+		Normaal();
+	}
+	const auto randomDamage = std::ceil(player_.playerShip.get_hp()*(random.Range(1, 100) / 100.0));
+	std::cout << "The ship took %" << randomDamage << " damage\n";
+	player_.playerShip.takeDamage(randomDamage);
 }
+
 bool World::gameIsOver()
 {
-	return player_.playerHas1milGold() || player_.playerhasDied();
+	return player_.playerHas1milGold() || player_.playerHasDied() || player_.playerHasQuit();
 }
 
 //TODO : loading csv files is not exception safe
@@ -163,12 +430,12 @@ bool World::load_city_distances(MyList<MyList<MyString>> data)
 {
 	for (auto r = 1; r < data.get_size(); r++)
 	{
-		cities_[r - 1].distances = MyList<Distance>(data[0].get_size());
-		for (auto c = 0; c < data[r].get_size(); c++)
+		cities_[r - 1].distances = MyList<Distance>(data[0].get_size()-1);
+		for (auto c = 1; c < data[r].get_size(); c++)
 		{
-			cities_[r - 1].distances[c] = Distance(data[0][c], data[r][c].Parse());
-			std::cout << cities_[r - 1].distances[c].get_name().GetString() << std::endl;
-			std::cout << cities_[r - 1].distances[c].get_distance() << std::endl;
+			cities_[r - 1].distances[c - 1] = Distance(data[0][c], data[r][c].Parse());
+			std::cout << cities_[r - 1].distances[c - 1].get_name().GetString() << std::endl;
+			std::cout << cities_[r - 1].distances[c - 1].get_distance() << std::endl;
 		}
 	}
 	return true;
@@ -239,7 +506,7 @@ bool World::load_item_price(MyList<MyList<MyString>> data)
 
 void World::load_ships(MyList<MyList<MyString>> data)
 {
-	ships_ = MyList<Ship>(data.get_size());
+	ships_ = MyList<Ship>(data.get_size()-1);
 	for (auto r = 1; r < data.get_size(); r++)
 	{
 		ships_[r - 1] = Ship(

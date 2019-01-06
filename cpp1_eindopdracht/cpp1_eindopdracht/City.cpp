@@ -410,3 +410,15 @@ void City::sellItems(Player& p)
 		items[cmd - 1].get_item().set_quantity(items[cmd - 1].get_item().get_quantity() + itemAmount);
 	}
 }
+
+Distance City::getDisance(const MyString & cityName) const
+{
+	for(int i = 0;i<distances.get_size()-1;i++)
+	{
+		if(distances[i].get_name() == cityName)
+		{
+			return distances[i];
+		}
+	}
+	throw std::exception("city does not exist");
+}

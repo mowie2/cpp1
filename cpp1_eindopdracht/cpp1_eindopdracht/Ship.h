@@ -18,12 +18,21 @@ public:
 	MyString get_misc() const;
 	void takeDamage(const int damageAmount);
 	MyList<Item> storage;
+
+	Canon getLightCanons()const;
+	Canon getMidCanons()const;
+	Canon getHeavyCanons()const;
+
+	int calculateFleeChance(const Ship& other) const;
+	int calculateDamage() const;
 private:
-	MyString shipName;
+	Canon light_;
+	Canon mid_;
+	Canon heavy_;
+	MyString shipName_;
 	int price_ = 0;
 	int max_items_ = 0;
 	int max_canons_ = 0;
 	int hp_ = 0;
-	MyString charteristics_;
-	MyList<Canon> canons_;
+	MyString characteristics_;
 };
