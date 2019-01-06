@@ -27,6 +27,8 @@ public:
 	bool SetDestination();
 
 	void calculateEvent();
+	void DoCombatLogic();
+
 	void Geen();
 	void Briesje();
 	void Zwak();

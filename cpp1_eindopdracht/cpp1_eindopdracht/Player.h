@@ -9,8 +9,11 @@ public:
 
 	int gold = 0;
 	Ship playerShip;
+	bool quit_ = false;
 
-	bool playerhasDied();
-	bool playerHas1milGold();
+	bool playerHasDied() const;
+	bool playerHas1milGold() const;
+	void quit();
+	bool playerHasQuit() const;
 private:
 };
