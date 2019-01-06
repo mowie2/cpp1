@@ -48,30 +48,27 @@ int City::get_item_index(const MyString & item_name)
 
 void City::buyShip(Player& p)
 {
-	int cmd = NULL;
-
-	
-
+	int cmd;
 	while(true)
 	{
-		while(std::cin >> cmd)
+		
+		std::cin >> cmd;
+		if(system( NULL))
+		{
+			system("CLS");			
+		}
+		if(std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+		if (cmd < 1 || cmd > 13)
 		{
 			std::cout << "Please select a valid option\n";
+			continue;
 		}
 		break;
-		//std::cout << std::flush;
-		
-		//cmd = NULL;
-		//if (std::cin >> cmd && cmd > 0 && cmd < 14)
-		//{
-		//	break;
-		//}
-		//if(cmd == NULL)
-		//{
-		//	std::cout << "Please select a valid option\n";
-		//}
 	}
-
 
 	switch (cmd)
 	{
