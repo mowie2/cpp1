@@ -114,10 +114,10 @@ bool World::SetDestination()
 	{
 		std::cout << '[' << (i + 1) << "] : " << cities_[i].get_name().GetString() << '\n';
 		std::cout << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << "\n";
-		std::cout << "-------------------------------\n";
+		std::cout << "====================================\n";
 	}
-	std::cout << "[0] : return\n";
-	std::cout << "-------------------------------\n";
+	std::cout << "[0] : Return\n";
+	std::cout << "====================================\n";
 
 	//get command
 	int cmd;
@@ -127,21 +127,22 @@ bool World::SetDestination()
 
 		if (std::cin.fail())
 		{
-			std::cout << "Please type the number of the destination.";
+			std::cout << "Please type the number of the destination\n";
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-		if(cmd == 0)
+		else if(cmd == 0)
 		{
 			return false;
 		}
-		if (cmd < 1 || cmd > cities_.get_size())
+		else if (cmd < 1 || cmd > cities_.get_size())
 		{
 			std::cout << "Please select a valid option\n";
-			continue;
-		} 
-		destinationPlayer_ = cities_[cmd-1].get_name();
-		return true;
+		}
+		else {
+			destinationPlayer_ = cities_[cmd - 1].get_name();
+			return true;
+		}
 	}
 }
 
@@ -185,7 +186,7 @@ void World::calculateEvent()
 void World::Geen()
 {
 	//TODO: implimenteer dat er niks gebeurd
-	std::cout << "There was no wind. The ship has not moved.";
+	std::cout << "There was no wind. The ship has not moved\n";
 }
 void World::Briesje()
 {
