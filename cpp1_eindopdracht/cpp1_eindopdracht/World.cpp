@@ -66,7 +66,7 @@ void World::DoSeaLogic()
 		std::cout << "Turns left : " << remainingDistance << '\n';
 		std::cout << "HP left : %" << player_.playerShip.get_hp() << "\n\n";
 		calculateEvent();
-		
+		std::cout << "press enter to continue\n";
 		std::cin.get();
 	}
 	currentPlayerLocation_ = destinationPlayer_;
@@ -243,6 +243,7 @@ void World::DoCombatLogic()
 
 	auto fighting = true;
 	while (fighting) {
+		std::cout << "press enter to continue\n";
 		std::cin.get();
 		if (system(NULL))
 		{
@@ -298,6 +299,7 @@ void World::DoCombatLogic()
 			std::cout << "You did %" << pirateDamage << " damage to the pirates\n";
 			player_.playerShip.takeDamage(pirateDamage);
 			std::cout << "The pirates did %" << damage << " damage to your ship\n";
+			std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		case 2:
@@ -312,12 +314,14 @@ void World::DoCombatLogic()
 				player_.playerShip.takeDamage(pirateDamage);
 				std::cout << "The pirates did %" << damage << " damage to your ship\n";
 			}
+			//std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		case 3:
 			//todo steal cargo
 			std::cout << "The pirates let you go but steal all your cargo\n";
 			fighting = false;
+			std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		default:
