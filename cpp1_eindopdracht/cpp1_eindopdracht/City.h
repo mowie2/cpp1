@@ -21,6 +21,7 @@ public:
 	MyList<ItemStock> items;
 	void buyShip(Player& p);
 	MyList<Distance> distances;
+	Distance getDisance(const MyString& cityName) const;
 private:
 	MyList<CanonStock> canons_;
 	MyString city_name_;

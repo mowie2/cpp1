@@ -131,3 +131,15 @@ void City::buyShip(Player& p)
 	}
 	
 }
+
+Distance City::getDisance(const MyString & cityName) const
+{
+	for(int i = 0;i<distances.get_size()-1;i++)
+	{
+		if(distances[i].get_name() == cityName)
+		{
+			return distances[i];
+		}
+	}
+	throw std::exception("city does not exist");
+}

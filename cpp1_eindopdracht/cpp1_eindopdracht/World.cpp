@@ -29,6 +29,13 @@ void World::start()
 	{
 		if (gameIsOver())
 		{
+			if(player_.playerHas1milGold())
+			{
+				std::cout << "Congratulations you have 1 million gold and won the game!!!\n";
+			} else
+			{
+				std::cout << "Your ship has sunk\n";
+			}
 			return;
 		}
 
@@ -48,19 +55,31 @@ void World::start()
 
 void World::DoSeaLogic()
 {
-	while (currentPlayerLocation_ != destinationPlayer_)
+	if (system(NULL))
+	{
+		system("CLS");
+	}
+	std::cin.get();
+	std::cout << "Sailing towards : " << destinationPlayer_.GetString() << "\n";
+	std::cout << "Turns left : " << remainingDistance << '\n';
+	std::cout << "HP left : %" << player_.playerShip.get_hp() << "\n\n";
+	while (remainingDistance > 0 && !gameIsOver())
 	{
 		calculateEvent();
+		std::cout << "Turns left : " << remainingDistance << '\n';
+		std::cout << "HP left : %" << player_.playerShip.get_hp() << "\n\n";
+		std::cin.get();
 	}
+	currentPlayerLocation_ = destinationPlayer_;
 }
 
 void World::DoCityLogic()
 {
-	while (true) {
-		if (system(NULL))
-		{
-			system("CLS");
-		}
+	if (system(NULL))
+	{
+		system("CLS");
+	}
+	while (!gameIsOver()) {	
 		std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
 
 		std::cout << "Choose one of the following actions by entering their number" << '\n';
@@ -106,14 +125,22 @@ bool World::SetDestination()
 	}
 	std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
 
-	//auto k = cities_[0].distances[0];
-
 	std::cout << "Action sail\n";
 	std::cout << "Choose one of the following destinations by entering their number" << '\n';
 	for(int i = 0;i<cities_.get_size()-1;i++)
 	{
 		std::cout << '[' << (i + 1) << "] : " << cities_[i].get_name().GetString() << '\n';
-		std::cout << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << "\n";
+		//////////////////////////////
+		// exception on getcitybyname
+		// exception on getdistance
+		try {
+			std::cout << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << "\n";
+		} catch(...)
+		{
+			std::cout << "error";
+			return false;
+		}
+		//////////////////////////////
 		std::cout << "====================================\n";
 	}
 	std::cout << "[0] : Return\n";
@@ -141,6 +168,17 @@ bool World::SetDestination()
 		}
 		else {
 			destinationPlayer_ = cities_[cmd - 1].get_name();
+			//////////////////////////////
+			// exception on getcitybyname
+			// exception on getdistance
+			try {
+				remainingDistance = cities_[getCityByName(currentPlayerLocation_)].getDisance(destinationPlayer_).get_distance();
+			} catch(...)
+			{
+				std::cout << "error could not get distance";
+				return false;
+			}
+			/////////////////////////////
 			return true;
 		}
 	}
@@ -185,52 +223,62 @@ void World::calculateEvent()
 
 void World::Geen()
 {
-	//TODO: implimenteer dat er niks gebeurd
-	std::cout << "There was no wind. The ship has not moved\n";
+	std::cout << "The ship has not moved\n";
 }
 void World::Briesje()
 {
-	//TODO: Heeft het schip als bijzonderheid “licht” dan geldt hetzelfde effect
-	//als bij normale wind.Zo niet, dan geldt hetzelfde effect als bij geen
-	//	wind.
-	if(player_.playerShip.get_misc().contains("log"))
+	if(player_.playerShip.get_misc().contains("licht"))
+	{
+		Normaal();
+	} else
+	{
+		Geen();
+	}
+}
+void World::Zwak()
+{
+	if (player_.playerShip.get_misc().contains("log"))
+	{
+		Geen();
+	}
+	else
 	{
 		Normaal();
 	}
 }
-
-void World::Zwak()
-{
-	
-	//TODO:Heeft het schip als bijzonderheid “log” dan geldt hetzelfde effect
-//als bij geen wind.Zo niet, dan geldt hetzelfde effect als bij normale
-//	wind..
-}
 void World::Normaal()
 {
-	//TODO:al Het schip heeft gevaren en is daarom één beurt dichter genaderd
-//tot de haven die het tot doel heeft.
+	std::cout << "The ship is one turn closer to its destination\n";
+	remainingDistance -= 1;
 }
-
 void World::Sterk()
 {
-	//TODO: Er staat zo veel wind dat het schip twee beurten dichter genaderd
-// is tot de haven die het tot doel heeft.
+	std::cout << "The ship is two turns closer to its destination\n";
+	remainingDistance -= 2;
 }
 void World::Storm()
 {
-	//TODO: Er is 40% kans dat het schip van de koers is geblazen en er één
-//beurt langer over doet om bij de haven te komen die het tot doel
-	//heeft.
-	//Er is 40 % kans dat het schip niet bewogen heeft(hetzelfde
-	//	resultaat dus als geen wind).
-	//Er is 20 % kans dat het schip de goede richting in geblazen is
-	//(hetzelfde resultaat als normale wind).
-	//Welk van voorgaande drie resultaten ook, het schip heeft sowieso
-	//averij opgelopen en verliest 1 – 100 % van zijn schadepunten.
-	//Indien het schip eindigt met 0 of minder schadepunten is het dus
-	//in de storm gezonken.
+	MyRandom random;
+	const auto randomChance = random.Range(1, 100);
+	if(randomChance<=40)
+	{
+		std::cout << "The storm had no effect\n";
+		Geen();
+	} else if(randomChance>40 && randomChance <=80)
+	{
+		std::cout << "The ship was blown out of course\n";
+		remainingDistance += 1;
+	}
+	else
+	{
+		std::cout << "The ship was blown in the right course\n";
+		Normaal();
+	}
+	const auto randomDamage = std::ceil(player_.playerShip.get_hp()*(random.Range(1, 100) / 100.0));
+	std::cout << "The ship took %" << randomDamage << " damage\n";
+	player_.playerShip.takeDamage(randomDamage);
 }
+
 bool World::gameIsOver()
 {
 	return player_.playerHas1milGold() || player_.playerhasDied();
