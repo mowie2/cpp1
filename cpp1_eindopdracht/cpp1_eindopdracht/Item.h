@@ -15,8 +15,8 @@ public:
 
 	MyString get_name() const;
 
-	void set_quantity(const int quantity);
-	int get_quantity() const;
+	void set_quantity(const int quantity) { quantity_ = quantity; }
+	int get_quantity() const { return quantity_; };
 
 	~Item() = default;
 private:

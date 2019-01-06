@@ -12,7 +12,11 @@ World::World()
 {
 	read();
 	currentPlayerLocation_ = "sea";
-	player_.gold = 0 + 1;
+	player_.gold = 99999 + 1;
+	cities_[getCityByName("Roatan")].EnterCity();
+	player_.playerShip = ships_[0];
+	cities_[getCityByName("Roatan")].buyItems(player_);
+	cities_[getCityByName("Roatan")].sellItems(player_);
 }
 
 World::~World()

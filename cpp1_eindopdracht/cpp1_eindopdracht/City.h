@@ -12,6 +12,7 @@ class City
 public:
 	City() = default;
 	City(const MyString& name,const MyList<Ship>& shipList);
+	void EnterCity();
 	//City(const MyString& name,const MyList<Ship>& shipList);
 	MyString get_name() const;
 
@@ -20,6 +21,8 @@ public:
 
 	MyList<ItemStock> items;
 	void buyShip(Player& p);
+	void buyItems(Player& p);
+	void sellItems(Player& p);
 	MyList<Distance> distances;
 private:
 	MyList<CanonStock> canons_;

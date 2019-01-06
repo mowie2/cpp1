@@ -24,7 +24,9 @@ public:
 		min_price_ = min;
 		max_price_ = max;
 	}
-
+	int get_Price() const { return  price_; }
+	
+	void set_Price(int price) { price_ = price; }
 	int get_min_price() const { return min_price_; }
 	int get_max_price() const { return max_price_; }
 private:
