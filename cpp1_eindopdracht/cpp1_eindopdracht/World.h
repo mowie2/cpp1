@@ -23,6 +23,9 @@ public:
 	
 
 	void DoSeaLogic();
+	void DoCityLogic();
+	bool SetDestination();
+
 	void calculateEvent();
 	void Geen();
 	void Briesje();

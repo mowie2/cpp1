@@ -11,9 +11,10 @@
 World::World()
 {
 	read();
-	currentPlayerLocation_ = "sea";
-	player_.gold = 999999 + 1;
-	cities_[getCityByName("Roatan")].buyShip(player_);
+	//todo random;
+	currentPlayerLocation_ = "Roatan";
+	player_.gold = 999999;
+	//cities_[getCityByName("Roatan")].buyShip(player_);
 }
 
 World::~World()
@@ -37,6 +38,10 @@ void World::start()
 		if (currentPlayerLocation_ == AT_SEA)
 		{
 			DoSeaLogic();
+		} 
+		else
+		{
+			DoCityLogic();
 		}
 	}
 }
@@ -46,6 +51,94 @@ void World::DoSeaLogic()
 	while (currentPlayerLocation_ != destinationPlayer_)
 	{
 		calculateEvent();
+	}
+}
+
+void World::DoCityLogic()
+{
+	while (true) {
+		if (system(NULL))
+		{
+			system("CLS");
+		}
+		std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
+
+		std::cout << "Choose one of the following actions by entering their number" << '\n';
+		std::cout << "[1] : buy stock\n";
+		std::cout << "[2] : buy cannons\n";
+		std::cout << "[3] : buy ship\n";
+		std::cout << "[4] : sail\n";
+
+		int cmd;
+		while (true)
+		{
+			std::cin >> cmd;
+
+			if (std::cin.fail())
+			{
+				std::cout << "Please type the number of the action you would like to perform.";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+			break;
+		}
+
+		switch (cmd)
+		{
+		case 4:
+			SetDestination();
+			DoSeaLogic();
+			break;
+		default:
+			std::cout << "Please type in a valid number.";
+			break;
+		}
+	}
+}
+
+bool World::SetDestination()
+{   
+	//print
+	if (system(NULL))
+	{
+		system("CLS");
+	}
+	std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
+
+	//auto k = cities_[0].distances[0];
+
+	std::cout << "Action sail\n";
+	std::cout << "Choose one of the following destinations by entering their number" << '\n';
+	std::cout << "[0] : return\n";
+	for(int i = 0;i<cities_.get_size()-1;i++)
+	{
+		std::cout << '[' << (i + 1) << "] : " << cities_[i].get_name().GetString() << '\n';
+		std::cout << '\t' << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << '\n';
+	}
+
+	//get command
+	int cmd;
+	while (true)
+	{
+		std::cin >> cmd;
+
+		if (std::cin.fail())
+		{
+			std::cout << "Please type the number of the destination.";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+		if(cmd == 0)
+		{
+			return false;
+		}
+		if (cmd < 1 || cmd > cities_.get_size())
+		{
+			std::cout << "Please select a valid option\n";
+			continue;
+		} 
+		currentPlayerLocation_ = cities_[cmd].get_name();
+		return true;
 	}
 }
 
@@ -160,12 +253,12 @@ bool World::load_city_distances(MyList<MyList<MyString>> data)
 {
 	for (auto r = 1; r < data.get_size(); r++)
 	{
-		cities_[r - 1].distances = MyList<Distance>(data[0].get_size());
-		for (auto c = 0; c < data[r].get_size(); c++)
+		cities_[r - 1].distances = MyList<Distance>(data[0].get_size()-1);
+		for (auto c = 1; c < data[r].get_size(); c++)
 		{
-			cities_[r - 1].distances[c] = Distance(data[0][c], data[r][c].Parse());
-			std::cout << cities_[r - 1].distances[c].get_name().GetString() << std::endl;
-			std::cout << cities_[r - 1].distances[c].get_distance() << std::endl;
+			cities_[r - 1].distances[c - 1] = Distance(data[0][c], data[r][c].Parse());
+			std::cout << cities_[r - 1].distances[c - 1].get_name().GetString() << std::endl;
+			std::cout << cities_[r - 1].distances[c - 1].get_distance() << std::endl;
 		}
 	}
 	return true;
