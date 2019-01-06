@@ -86,8 +86,9 @@ void World::DoCityLogic()
 		switch (cmd)
 		{
 		case 4:
-			SetDestination();
-			DoSeaLogic();
+			if (SetDestination()) {
+				DoSeaLogic();
+			}
 			break;
 		default:
 			std::cout << "Please type in a valid number.";
@@ -109,12 +110,14 @@ bool World::SetDestination()
 
 	std::cout << "Action sail\n";
 	std::cout << "Choose one of the following destinations by entering their number" << '\n';
-	std::cout << "[0] : return\n";
 	for(int i = 0;i<cities_.get_size()-1;i++)
 	{
 		std::cout << '[' << (i + 1) << "] : " << cities_[i].get_name().GetString() << '\n';
-		std::cout << '\t' << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << '\n';
+		std::cout << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << "\n";
+		std::cout << "-------------------------------\n";
 	}
+	std::cout << "[0] : return\n";
+	std::cout << "-------------------------------\n";
 
 	//get command
 	int cmd;
@@ -137,7 +140,7 @@ bool World::SetDestination()
 			std::cout << "Please select a valid option\n";
 			continue;
 		} 
-		currentPlayerLocation_ = cities_[cmd].get_name();
+		destinationPlayer_ = cities_[cmd-1].get_name();
 		return true;
 	}
 }
@@ -149,26 +152,32 @@ void World::calculateEvent()
 
 	if (randomNumber == 1 || randomNumber == 2)
 	{
-
+		std::cout << "There was no wind\n";
+		Geen();
 	}
 	if (randomNumber == 3 || randomNumber == 4)
 	{
+		std::cout << "There was a breeze\n";
 		Briesje();
 	}
 	if (randomNumber >= 5 && randomNumber <= 7)
 	{
+		std::cout << "The wind was weak\n";
 		Zwak();
 	}
 	if (randomNumber >= 8 && randomNumber <= 17)
 	{
+		std::cout << "The wind was normal\n";
 		Normaal();
 	}
 	if (randomNumber == 18 || randomNumber == 19)
 	{
+		std::cout << "The wind was strong\n";
 		Sterk();
 	}
 	if (randomNumber == 20)
 	{
+		std::cout << "The was a storm\n";
 		Storm();
 	}
 }
@@ -176,16 +185,22 @@ void World::calculateEvent()
 void World::Geen()
 {
 	//TODO: implimenteer dat er niks gebeurd
+	std::cout << "There was no wind. The ship has not moved.";
 }
 void World::Briesje()
 {
 	//TODO: Heeft het schip als bijzonderheid “licht” dan geldt hetzelfde effect
 	//als bij normale wind.Zo niet, dan geldt hetzelfde effect als bij geen
 	//	wind.
+	if(player_.playerShip.get_misc().contains("log"))
+	{
+		Normaal();
+	}
 }
 
 void World::Zwak()
 {
+	
 	//TODO:Heeft het schip als bijzonderheid “log” dan geldt hetzelfde effect
 //als bij geen wind.Zo niet, dan geldt hetzelfde effect als bij normale
 //	wind..
