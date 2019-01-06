@@ -20,7 +20,8 @@ public:
 	Ship getCarrack();
 	Ship getOorlogsGaljoen();
 	Ship getShipOfTheLine();
-private:
 	MyList<Ship> shipList;
+private:
+	
 	Ship GetShip(MyString name);
 };
