@@ -36,6 +36,38 @@ MyString & MyString::operator=(MyString && other) {
 	return *this;
 }
 
+bool MyString::operator==(const MyString & other)
+{
+	if (this->length_ == other.length_)
+	{
+		for (int i = 0; i < length_; i++)
+		{
+			if (this->string_[i] != other.string_[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool MyString::operator!=(const MyString& other)
+{
+	if (this->length_ == other.length_)
+	{
+		for (int i = 0; i < length_; i++)
+		{
+			if (this->string_[i] != other.string_[i])
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	return true;
+}
+
 MyString::MyString(const MyString & other) {
 	SetString(other.string_, other.length_);
 }

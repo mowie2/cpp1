@@ -22,9 +22,19 @@ public:
 
 	
 
+	void DoSeaLogic();
+	void calculateEvent();
+	void Geen();
+	void Briesje();
+	void Zwak();
+	void Normaal();
+	void Sterk();
+	void Storm();
+
 	void start();
 
 private:
+	const MyString AT_SEA = "sea";
 	//MyList<City> cities_;
 	//int count_cities_ = 0;
 	//MyList<Ship> ships_;
@@ -48,5 +58,7 @@ private:
 	MyList<City> cities_;
 	MyList<Ship> ships_;
 	MyString currentPlayerLocation_;
+	MyString destinationPlayer_;
+	int remainingDistance;
 };
 

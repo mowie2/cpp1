@@ -75,6 +75,7 @@ Ship ShipFactory::GetShip(MyString name)
 {
 	for (auto i = 0; i < shipList.get_size(); i++)
 	{
+		Ship s = shipList[i];
 		if (shipList[i].get_type().equals(name))
 		{
 			return shipList[i];

@@ -48,5 +48,39 @@ int City::get_item_index(const MyString & item_name)
 
 void City::buyShip(Player& p)
 {
-	p.playerShip = shipFactory_.getFregat();
+	int cmd = NULL;
+
+	
+
+	while(true)
+	{
+		while(std::cin >> cmd)
+		{
+			std::cout << "Please select a valid option\n";
+		}
+		break;
+		//std::cout << std::flush;
+		
+		//cmd = NULL;
+		//if (std::cin >> cmd && cmd > 0 && cmd < 14)
+		//{
+		//	break;
+		//}
+		//if(cmd == NULL)
+		//{
+		//	std::cout << "Please select a valid option\n";
+		//}
+	}
+
+
+	switch (cmd)
+	{
+	case 1:
+		p.playerShip = shipFactory_.getFregat();
+		break;
+	case 2:
+		p.playerShip = shipFactory_.getBrigg();
+		break;
+	}
+	
 }

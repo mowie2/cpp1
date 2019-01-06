@@ -14,6 +14,7 @@ public:
 	MyString& operator=(const MyString& other);
 	MyString& operator=(MyString&& other);
 	bool operator==(const MyString& other);
+	bool operator!=(const MyString& other);
 	MyString(const MyString& other);
 	MyString(MyString&& other);
 
@@ -32,7 +33,6 @@ public:
 	MyString subset(const int start, const int end) const;
 	int GetLength() const;
 private:
-	//todo nullptr
 	char *string_ = nullptr;
 	int length_ = 0;
 	void SetString(const char* string, int length);
