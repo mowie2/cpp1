@@ -12,6 +12,14 @@ World::World()
 {
 	read();
 	currentPlayerLocation_ = "Roatan";
+	const auto index = getCityByName(currentPlayerLocation_);
+	if (index != -1)
+	{
+		cities_[index].EnterCity();
+	}else
+	{
+		//game over?
+	}
 	player_.gold = 0 + 1;
 	player_.playerShip = ships_[0];
 }
@@ -66,10 +74,18 @@ void World::DoSeaLogic()
 		std::cout << "Turns left : " << remainingDistance << '\n';
 		std::cout << "HP left : %" << player_.playerShip.get_hp() << "\n\n";
 		calculateEvent();
-		
+		std::cout << "press enter to continue\n";
 		std::cin.get();
 	}
 	currentPlayerLocation_ = destinationPlayer_;
+	const auto index = getCityByName(currentPlayerLocation_);
+	if (index != -1)
+	{
+		cities_[index].EnterCity();
+	} else
+	{
+		//game over?
+	}
 }
 
 void World::DoCityLogic()
@@ -78,45 +94,60 @@ void World::DoCityLogic()
 	{
 		system("CLS");
 	}
-	while (!gameIsOver()) {	
-		std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
 
-		std::cout << "Choose one of the following actions by entering its number" << '\n';
-		std::cout << "[1] : buy stock\n";
-		std::cout << "[2] : buy cannons\n";
-		std::cout << "[3] : buy ship\n";
-		std::cout << "[4] : sail\n";
-		//std::cout << "[0] : quit game\n";
+	const auto index = getCityByName(currentPlayerLocation_);
+	if (index != -1)
+	{
+		while (!gameIsOver()) {
+			std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
 
-		int cmd;
-		while (true)
-		{
-			std::cin >> cmd;
+			std::cout << "Choose one of the following actions by entering its number" << '\n';
+			std::cout << "[1] : buy stock\n";
+			std::cout << "[2] : buy cannons\n";
+			std::cout << "[3] : buy ship\n";
+			std::cout << "[4] : sail\n";
+			//std::cout << "[0] : quit game\n";
 
-			if (std::cin.fail())
+			int cmd;
+			while (true)
 			{
-				std::cout << "Please type the number of the action you would like to perform.";
-				std::cin.clear();
-				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			}
-			break;
-		}
+				std::cin >> cmd;
 
-		switch (cmd)
-		{
-		case 4:
-			if (SetDestination()) {
-				DoSeaLogic();
-				if (system(NULL))
+				if (std::cin.fail())
 				{
-					system("CLS");
+					std::cout << "Please type the number of the action you would like to perform.";
+					std::cin.clear();
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				}
+				break;
 			}
-			break;
-		default:
-			std::cout << "Please type in a valid number\n";
-			break;
+
+			switch (cmd)
+			{
+			case 1:
+				cities_[index].buyItems(player_);
+				break;
+			case 3:
+				cities_[index].buyShip(player_);
+				break;
+			case 4:
+				if (SetDestination()) {
+					DoSeaLogic();
+					if (system(NULL))
+					{
+						system("CLS");
+					}
+				}
+				break;
+			default:
+				std::cout << "Please type in a valid number\n";
+				break;
+			}
 		}
+	}
+	else
+	{
+		//game over?
 	}
 }
 
@@ -129,7 +160,7 @@ bool World::SetDestination()
 	}
 	std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
 
-	std::cout << "Action sail\n";
+	//std::cout << "Action sail\n";
 	std::cout << "Choose one of the following destinations by entering its number" << '\n';
 	for(int i = 0;i<cities_.get_size()-1;i++)
 	{
@@ -243,6 +274,7 @@ void World::DoCombatLogic()
 
 	auto fighting = true;
 	while (fighting) {
+		std::cout << "press enter to continue\n";
 		std::cin.get();
 		if (system(NULL))
 		{
@@ -298,6 +330,7 @@ void World::DoCombatLogic()
 			std::cout << "You did %" << pirateDamage << " damage to the pirates\n";
 			player_.playerShip.takeDamage(pirateDamage);
 			std::cout << "The pirates did %" << damage << " damage to your ship\n";
+			std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		case 2:
@@ -312,12 +345,14 @@ void World::DoCombatLogic()
 				player_.playerShip.takeDamage(pirateDamage);
 				std::cout << "The pirates did %" << damage << " damage to your ship\n";
 			}
+			//std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		case 3:
 			//todo steal cargo
 			std::cout << "The pirates let you go but steal all your cargo\n";
 			fighting = false;
+			std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		default:
