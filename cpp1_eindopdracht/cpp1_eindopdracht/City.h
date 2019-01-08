@@ -25,6 +25,8 @@ public:
 	void sellItems(Player& p);
 	MyList<Distance> distances;
 	Distance getDisance(const MyString& cityName) const;
+	void buyCannons(Player& p);
+	void sellCannons(Player& p);
 private:
 	MyList<CanonStock> canons_;
 	MyString city_name_;

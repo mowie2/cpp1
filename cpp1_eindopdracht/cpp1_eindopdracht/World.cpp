@@ -16,11 +16,12 @@ World::World()
 	if (index != -1)
 	{
 		cities_[index].EnterCity();
-	}else
+	}
+	else
 	{
 		//game over?
 	}
-	player_.gold = 0 + 1;
+	player_.gold = 900000;
 	player_.playerShip = ships_[0];
 }
 
@@ -36,10 +37,11 @@ void World::start()
 	{
 		if (gameIsOver())
 		{
-			if(player_.playerHas1milGold())
+			if (player_.playerHas1milGold())
 			{
 				std::cout << "Congratulations you have 1 million gold and won the game!!!\n";
-			} else
+			}
+			else
 			{
 				std::cout << "Your ship has sunk\n";
 			}
@@ -47,12 +49,12 @@ void World::start()
 		}
 
 		//TODO: logica voor de stad/shop
-		
+
 
 		if (currentPlayerLocation_ == AT_SEA)
 		{
 			DoSeaLogic();
-		} 
+		}
 		else
 		{
 			DoCityLogic();
@@ -82,7 +84,8 @@ void World::DoSeaLogic()
 	if (index != -1)
 	{
 		cities_[index].EnterCity();
-	} else
+	}
+	else
 	{
 		//game over?
 	}
@@ -99,13 +102,14 @@ void World::DoCityLogic()
 	if (index != -1)
 	{
 		while (!gameIsOver()) {
-			std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
-
 			std::cout << "Choose one of the following actions by entering its number" << '\n';
-			std::cout << "[1] : buy stock\n";
-			std::cout << "[2] : buy cannons\n";
-			std::cout << "[3] : buy ship\n";
-			std::cout << "[4] : sail\n";
+			std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
+			std::cout << "[1] : buy items\n";
+			std::cout << "[2] : sell items\n";
+			std::cout << "[3] : buy cannons\n";
+			std::cout << "[4] : sell cannons\n";
+			std::cout << "[5] : buy ship\n";
+			std::cout << "[6] : sail\n";
 			//std::cout << "[0] : quit game\n";
 
 			int cmd;
@@ -125,12 +129,21 @@ void World::DoCityLogic()
 			switch (cmd)
 			{
 			case 1:
-				cities_[index].buyItems(player_);
+				cities_[getCityByName(currentPlayerLocation_)].buyItems(player_);
+				break;
+			case 2:
+				cities_[getCityByName(currentPlayerLocation_)].sellItems(player_);
 				break;
 			case 3:
-				cities_[index].buyShip(player_);
+				cities_[getCityByName(currentPlayerLocation_)].buyCannons(player_);
 				break;
 			case 4:
+				cities_[getCityByName(currentPlayerLocation_)].sellCannons(player_);
+				break;
+			case 5:
+				cities_[getCityByName(currentPlayerLocation_)].buyShip(player_);
+				break;
+			case 6:
 				if (SetDestination()) {
 					DoSeaLogic();
 					if (system(NULL))
@@ -152,7 +165,7 @@ void World::DoCityLogic()
 }
 
 bool World::SetDestination()
-{   
+{
 	//print
 	if (system(NULL))
 	{
@@ -162,7 +175,7 @@ bool World::SetDestination()
 
 	//std::cout << "Action sail\n";
 	std::cout << "Choose one of the following destinations by entering its number" << '\n';
-	for(int i = 0;i<cities_.get_size()-1;i++)
+	for (int i = 0; i < cities_.get_size() - 1; i++)
 	{
 		std::cout << '[' << (i + 1) << "] : " << cities_[i].get_name().GetString() << '\n';
 		//////////////////////////////
@@ -170,7 +183,8 @@ bool World::SetDestination()
 		// exception on getdistance
 		try {
 			std::cout << "Distance: " << cities_[getCityByName(currentPlayerLocation_)].distances[i].get_distance() << "\n";
-		} catch(...)
+		}
+		catch (...)
 		{
 			std::cout << "error";
 			return false;
@@ -193,7 +207,7 @@ bool World::SetDestination()
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-		else if(cmd == 0)
+		else if (cmd == 0)
 		{
 			return false;
 		}
@@ -208,7 +222,8 @@ bool World::SetDestination()
 			// exception on getdistance
 			try {
 				remainingDistance = cities_[getCityByName(currentPlayerLocation_)].getDisance(destinationPlayer_).get_distance();
-			} catch(...)
+			}
+			catch (...)
 			{
 				std::cout << "error could not get distance";
 				return false;
@@ -255,16 +270,16 @@ void World::calculateEvent()
 		Storm();
 	}
 	int randomPirate = random.Range(1, 100);
-	if(randomPirate<=20)
+	if (randomPirate <= 20)
 	{
 		DoCombatLogic();
 	}
 }
 
 void World::DoCombatLogic()
-{	
+{
 	std::cout << "A random pirate ship has appeared!\n\n";
-	
+
 
 	MyRandom rand;
 	int index = rand.Range(0, ships_.get_size() - 1);
@@ -281,7 +296,7 @@ void World::DoCombatLogic()
 			system("CLS");
 		}
 		std::cout << "A random pirate ship has appeared!\n\n";
-		
+
 		std::cout << "Pirate ship :\n";
 		std::cout << "type : " << pirateShip.get_type().GetString() << '\n';;
 		std::cout << "hp   : " << pirateShip.get_hp() << '\n';
@@ -334,7 +349,7 @@ void World::DoCombatLogic()
 			std::cin.get();
 			break;
 		case 2:
-			if(flee<=fleeChance)
+			if (flee <= fleeChance)
 			{
 				std::cout << "You have successfully fled\n";
 				fighting = false;
@@ -360,12 +375,12 @@ void World::DoCombatLogic()
 			break;
 		}
 		//player_.playerShip.takeDamage(100);
-		if(pirateShip.get_hp() == 0 || player_.playerShip.get_hp() == 0)
+		if (pirateShip.get_hp() == 0 || player_.playerShip.get_hp() == 0)
 		{
 			fighting = false;
 		}
 
-		
+
 	}
 }
 
@@ -375,10 +390,11 @@ void World::Geen()
 }
 void World::Briesje()
 {
-	if(player_.playerShip.get_misc().contains("licht"))
+	if (player_.playerShip.get_misc().contains("licht"))
 	{
 		Normaal();
-	} else
+	}
+	else
 	{
 		Geen();
 	}
@@ -408,11 +424,12 @@ void World::Storm()
 {
 	MyRandom random;
 	const auto randomChance = random.Range(1, 100);
-	if(randomChance<=40)
+	if (randomChance <= 40)
 	{
 		std::cout << "The storm had no effect\n";
 		Geen();
-	} else if(randomChance>40 && randomChance <=80)
+	}
+	else if (randomChance > 40 && randomChance <= 80)
 	{
 		std::cout << "The ship was blown out of course\n";
 		remainingDistance += 1;
@@ -465,7 +482,7 @@ bool World::load_city_distances(MyList<MyList<MyString>> data)
 {
 	for (auto r = 1; r < data.get_size(); r++)
 	{
-		cities_[r - 1].distances = MyList<Distance>(data[0].get_size()-1);
+		cities_[r - 1].distances = MyList<Distance>(data[0].get_size() - 1);
 		for (auto c = 1; c < data[r].get_size(); c++)
 		{
 			cities_[r - 1].distances[c - 1] = Distance(data[0][c], data[r][c].Parse());
@@ -541,7 +558,7 @@ bool World::load_item_price(MyList<MyList<MyString>> data)
 
 void World::load_ships(MyList<MyList<MyString>> data)
 {
-	ships_ = MyList<Ship>(data.get_size()-1);
+	ships_ = MyList<Ship>(data.get_size() - 1);
 	for (auto r = 1; r < data.get_size(); r++)
 	{
 		ships_[r - 1] = Ship(

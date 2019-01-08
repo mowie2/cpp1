@@ -22,6 +22,13 @@ public:
 	Canon getLightCanons()const;
 	Canon getMidCanons()const;
 	Canon getHeavyCanons()const;
+	void addLightCannons(int c) { light_.add(c); }
+	void addMediumCannons(int c) { mid_.add(c); }
+	void addHeavyCannons(int c) { heavy_.add(c); }
+
+	void removeLightCannons(int c) { light_.remove(c); }
+	void removeMediumCannons(int c) { mid_.remove(c); }
+	void removeHeavyCannons(int c) { heavy_.remove(c); }
 
 	int calculateFleeChance(const Ship& other) const;
 	int calculateDamage() const;
