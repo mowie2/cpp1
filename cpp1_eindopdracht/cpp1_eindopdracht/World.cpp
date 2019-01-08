@@ -74,7 +74,7 @@ void World::DoSeaLogic()
 		//std::cin.get();
 		std::cout << "Sailing towards : " << destinationPlayer_.GetString() << "\n";
 		std::cout << "Turns left : " << remainingDistance << '\n';
-		std::cout << "HP left : %" << player_.playerShip.get_hp() << "\n\n";
+		std::cout << "HP left : " << player_.playerShip.get_hp() << "\n\n";
 		calculateEvent();
 		std::cout << "press enter to continue\n";
 		std::cin.get();
@@ -342,9 +342,9 @@ void World::DoCombatLogic()
 		{
 		case 1:
 			pirateShip.takeDamage(damage);
-			std::cout << "You did %" << pirateDamage << " damage to the pirates\n";
+			std::cout << "You did %" << damage << " damage to the pirates\n";
 			player_.playerShip.takeDamage(pirateDamage);
-			std::cout << "The pirates did %" << damage << " damage to your ship\n";
+			std::cout << "The pirates did %" << pirateDamage << " damage to your ship\n";
 			std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
@@ -358,7 +358,7 @@ void World::DoCombatLogic()
 			{
 				std::cout << "You could not flee\n";
 				player_.playerShip.takeDamage(pirateDamage);
-				std::cout << "The pirates did %" << damage << " damage to your ship\n";
+				std::cout << "The pirates did " << pirateDamage << " damage to your ship\n";
 			}
 			//std::cout << "press enter to continue\n";
 			std::cin.get();

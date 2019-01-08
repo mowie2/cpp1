@@ -81,7 +81,7 @@ void City::buyShip(Player& p)
 		std::cout << "Which ship would you like to buy?\n";
 		std::cout << "You have: " << p.gold << " gold to spend\n";
 		std::cout << "Your current ship is: " << p.playerShip.get_type().GetString() << "\n";
-		for (auto i = 1; i < shipFactory_.shipList.get_size(); i++)
+		for (auto i = 1; i < shipFactory_.shipList.get_size() + 1; i++)
 		{
 			MyString shipName = shipFactory_.shipList[i - 1].get_type();
 			std::cout << "====================================\n";
@@ -225,6 +225,8 @@ void City::buyShip(Player& p)
 			p.playerShip = shipFactory_.getShipOfTheLine();
 			break;
 		}
+
+		p.gold -= shipFactory_.shipList[cmd - 1].get_price();
 		break;
 	}
 }
@@ -533,7 +535,7 @@ void City::buyCannons(Player& p)
 		}
 		canons_[cmd - 1].get_item().remove(itemAmount);
 		p.gold -= (itemAmount * item.get_Price());
-		if(cmd == 1)
+		if (cmd == 1)
 		{
 			p.playerShip.addLightCannons(itemAmount);
 		}
@@ -541,12 +543,12 @@ void City::buyCannons(Player& p)
 		{
 			p.playerShip.addMediumCannons(itemAmount);
 		}
-		else if(cmd == 3)
+		else if (cmd == 3)
 		{
 			p.playerShip.addHeavyCannons(itemAmount);
 		}
-		
-		
+
+
 	}
 }
 
@@ -563,7 +565,7 @@ void City::sellCannons(Player& p)
 	{
 		std::cout << "Which canons would you like to sell?\n";
 		std::cout << "You have: " << p.gold << " gold\n";
-		
+
 		std::cout << "====================================\n";
 		std::cout << "\t\t[" << 1 << "]\n";
 		std::cout << "Name: light\n";
