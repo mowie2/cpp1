@@ -9,20 +9,25 @@
 #include "MyRandom.h"
 
 World::World()
-{
-	read();
-	currentPlayerLocation_ = "Roatan";
-	const auto index = getCityByName(currentPlayerLocation_);
-	if (index != -1)
+{	
+	good_init_ = read();
+	if (good_init_) {
+		currentPlayerLocation_ = "Roatan";
+		const auto index = getCityByName(currentPlayerLocation_);
+		if (index != -1)
+		{
+			cities_[index].EnterCity();
+		}
+		else
+		{
+			//game over?
+		}
+		player_.gold = 0;
+		player_.playerShip = ships_[0];
+	} else
 	{
-		cities_[index].EnterCity();
+		std::cout<<"could not read files\n";
 	}
-	else
-	{
-		//game over?
-	}
-	player_.gold = 0;
-	player_.playerShip = ships_[0];
 }
 
 World::~World()
@@ -33,6 +38,10 @@ World::~World()
 
 void World::start()
 {
+	if (!good_init_) {
+		std::cout << "could not start game\n";
+		return;
+	}
 	while (true)
 	{
 		if (gameIsOver())
@@ -667,15 +676,18 @@ bool World::read()
 		load_ships(ships.file);
 
 		load_cities(city_distance.file[0]);
-		load_city_distances(city_distance.file);
+		bool k1 = load_city_distances(city_distance.file);
 		load_items(item_amount.file[0]);
 
 
 		load_item_ships();
 
-		load_item_amount(item_amount.file);
-		load_item_price(item_price.file);
-
+		bool k2 = load_item_amount(item_amount.file);
+		bool k3 = load_item_price(item_price.file);
+		if(!k1 || !k2 || !k3)
+		{
+			return false;
+		}
 	}
 	else
 	{

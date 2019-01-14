@@ -65,5 +65,6 @@ private:
 	MyString currentPlayerLocation_;
 	MyString destinationPlayer_;
 	int remainingDistance;
+	bool good_init_;
 };
 
