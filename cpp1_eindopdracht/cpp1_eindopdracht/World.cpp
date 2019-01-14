@@ -41,9 +41,13 @@ void World::start()
 			{
 				std::cout << "Congratulations you have 1 million gold and won the game!!!\n";
 			}
-			else
+			else if(player_.playerHasDied())
 			{
 				std::cout << "Your ship has sunk\n";
+			} 
+			else
+			{
+				std::cout << "Bye Bye\n";
 			}
 			return;
 		}
@@ -110,7 +114,7 @@ void World::DoCityLogic()
 			std::cout << "[4] : sell cannons\n";
 			std::cout << "[5] : buy ship\n";
 			std::cout << "[6] : sail\n";
-			//std::cout << "[0] : quit game\n";
+			std::cout << "[0] : quit game\n";
 
 			int cmd;
 			while (true)
@@ -128,6 +132,9 @@ void World::DoCityLogic()
 
 			switch (cmd)
 			{
+			case 0:
+				player_.quit();
+				break;
 			case 1:
 				cities_[getCityByName(currentPlayerLocation_)].buyItems(player_);
 				break;
