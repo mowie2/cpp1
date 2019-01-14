@@ -7,6 +7,7 @@ Ship::Ship(const MyString & type, const int price, const int capacity, const int
 	this->price_ = price;
 	this->max_items_ = capacity;
 	this->max_canons_ = max_canons;
+	this->max_hp_ = hp;
 	this->hp_ = hp;
 
 	light_ = Canon("licht", 0, 2);
@@ -38,6 +39,16 @@ int Ship::get_max_canons() const
 int Ship::get_hp() const
 {
 	return hp_;
+}
+
+int Ship::get_max_hp() const
+{
+	return max_hp_;
+}
+
+void Ship::addhp(int hp)
+{
+	hp_ += hp;
 }
 
 MyString Ship::get_misc() const

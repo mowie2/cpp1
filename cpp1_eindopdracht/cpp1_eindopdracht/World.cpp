@@ -21,7 +21,7 @@ World::World()
 	{
 		//game over?
 	}
-	player_.gold = 900000;
+	player_.gold = 0;
 	player_.playerShip = ships_[0];
 }
 
@@ -108,12 +108,15 @@ void World::DoCityLogic()
 		while (!gameIsOver()) {
 			std::cout << "Choose one of the following actions by entering its number" << '\n';
 			std::cout << "Current city: " << currentPlayerLocation_.GetString() << "\n\n";
+			std::cout << "Current ship hp: " << player_.playerShip.get_hp() << "\n";
+			std::cout << "Current gold : " << player_.gold << "\n\n";
 			std::cout << "[1] : buy items\n";
 			std::cout << "[2] : sell items\n";
 			std::cout << "[3] : buy cannons\n";
 			std::cout << "[4] : sell cannons\n";
 			std::cout << "[5] : buy ship\n";
 			std::cout << "[6] : sail\n";
+			std::cout << "[7] : repair ship\n";
 			std::cout << "[0] : quit game\n";
 
 			int cmd;
@@ -157,6 +160,28 @@ void World::DoCityLogic()
 					{
 						system("CLS");
 					}
+				}
+				break;
+			case 7:
+				if(player_.playerShip.get_hp() < player_.playerShip.get_max_hp())
+				{
+					if(player_.gold>0)
+					{
+						player_.gold--;
+						auto a = player_.playerShip.get_max_hp() - player_.playerShip.get_hp();
+						if (a >= 10) {
+							a = 10;
+						}
+						player_.playerShip.addhp(10);
+						std::cout << "Your ship has been repaired with "<<a<<" hp for 1 gold\n";
+					}
+					else
+					{
+						std::cout << "You do not have enough gold\n";
+					}
+				}else
+				{
+					std::cout << "your ship is already at full hp\n";
 				}
 				break;
 			default:
@@ -500,7 +525,7 @@ void World::load_cities(MyList<MyString>& cities)
 	for (auto c = 0; c < cities.get_size() - 1; c++)
 	{
 		cities_[c] = City(cities[c + 1], ships_);
-		std::cout << cities_[c].get_name().GetString() << std::endl;
+		//std::cout << cities_[c].get_name().GetString() << std::endl;
 	}
 }
 
@@ -512,8 +537,8 @@ bool World::load_city_distances(MyList<MyList<MyString>> data)
 		for (auto c = 1; c < data[r].get_size(); c++)
 		{
 			cities_[r - 1].distances[c - 1] = Distance(data[0][c], data[r][c].Parse());
-			std::cout << cities_[r - 1].distances[c - 1].get_name().GetString() << std::endl;
-			std::cout << cities_[r - 1].distances[c - 1].get_distance() << std::endl;
+			//std::cout << cities_[r - 1].distances[c - 1].get_name().GetString() << std::endl;
+			//std::cout << cities_[r - 1].distances[c - 1].get_distance() << std::endl;
 		}
 	}
 	return true;
@@ -530,7 +555,7 @@ void World::load_items(MyList<MyString>& items)
 			for (auto i = 0; i < items.get_size() - 1; i++)
 			{
 				cities_[c].items[i] = ItemStock(Item(items[i + 1]));
-				std::cout << cities_[c].items[i].get_item().get_name().GetString() << std::endl;
+				//std::cout << cities_[c].items[i].get_item().get_name().GetString() << std::endl;
 			}
 		}
 	}
@@ -552,8 +577,8 @@ bool World::load_item_amount(MyList<MyList<MyString>> data)
 			const auto min = data[r + 1][c + 1].subset(0, index[0]).Parse();
 			const auto max = data[r + 1][c + 1].subset(index[0] + 1, data[r + 1][c + 1].GetLength()).Parse();
 			cities_[r].items[c].set_quantities(min, max);
-			std::cout << cities_[r].items[c].get_min_quantities() << std::endl;
-			std::cout << cities_[r].items[c].get_max_quantities() << std::endl;
+			//std::cout << cities_[r].items[c].get_min_quantities() << std::endl;
+			//std::cout << cities_[r].items[c].get_max_quantities() << std::endl;
 		}
 	}
 	return true;
@@ -575,8 +600,8 @@ bool World::load_item_price(MyList<MyList<MyString>> data)
 			const auto min = data[r + 1][c + 1].subset(0, index[0]).Parse();
 			const auto max = data[r + 1][c + 1].subset(index[0] + 1, data[r + 1][c + 1].GetLength()).Parse();
 			cities_[r].items[c].set_prices(min, max);
-			std::cout << cities_[r].items[c].get_min_price() << std::endl;
-			std::cout << cities_[r].items[c].get_max_price() << std::endl;
+			//std::cout << cities_[r].items[c].get_min_price() << std::endl;
+			//std::cout << cities_[r].items[c].get_max_price() << std::endl;
 		}
 	}
 	return true;
@@ -595,7 +620,7 @@ void World::load_ships(MyList<MyList<MyString>> data)
 			data[r][4].Parse(),
 			data[r][5]
 		);
-		std::cout << ships_[r - 1].get_type().GetString() << std::endl;
+		//std::cout << ships_[r - 1].get_type().GetString() << std::endl;
 	}
 }
 
@@ -606,7 +631,7 @@ void World::load_item_ships()
 		for (auto i = 0; i < cities_[0].items.get_size(); i++)
 		{
 			ships_[s].storage[i] = cities_[0].items[i].get_item();
-			std::cout << ships_[s].storage[i].get_name().GetString() << std::endl;
+			//std::cout << ships_[s].storage[i].get_name().GetString() << std::endl;
 		}
 	}
 }

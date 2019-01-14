@@ -15,6 +15,8 @@ public:
 	int get_max_items() const;
 	int get_max_canons() const;
 	int get_hp() const;
+	int get_max_hp() const;
+	void addhp(int hp);
 	MyString get_misc() const;
 	void takeDamage(const int damageAmount);
 	MyList<Item> storage;
@@ -40,6 +42,7 @@ public:
 	int price_ = 0;
 	int max_items_ = 0;
 	int max_canons_ = 0;
+	int max_hp_ = 0;
 	int hp_ = 0;
 	MyString characteristics_;
 };

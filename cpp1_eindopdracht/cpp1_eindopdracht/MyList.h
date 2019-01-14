@@ -89,6 +89,15 @@ public:
 		throw std::out_of_range("out of range");
 	}
 
+	T operator[](const int index) const
+	{
+		if (index >= 0 && index < size_)
+		{
+			return list_[index];
+		}
+		throw std::out_of_range("out of range");
+	}
+
 	int get_size() const
 	{
 		return size_;
