@@ -433,7 +433,7 @@ void World::Storm()
 	const auto randomChance = random.Range(1, 100);
 	if (randomChance <= 40)
 	{
-		std::cout << "The storm had no effect\n";
+		//std::cout << "The storm had no effect\n";
 		Geen();
 	}
 	else if (randomChance > 40 && randomChance <= 80)

@@ -74,24 +74,32 @@ void City::buyShip(Player& p)
 	{
 		system("CLS");
 	}
-
+	
 	int cmd;
 	while (true)
 	{
 		std::cout << "Which ship would you like to buy?\n";
 		std::cout << "You have: " << p.gold << " gold to spend\n";
 		std::cout << "Your current ship is: " << p.playerShip.get_type().GetString() << "\n";
+
 		for (auto i = 1; i < shipFactory_.shipList.get_size() + 1; i++)
 		{
-			MyString shipName = shipFactory_.shipList[i - 1].get_type();
-			std::cout << "====================================\n";
-			std::cout << "\t\t[" << i << "]\n";
-			std::cout << "Name: " << shipName.GetString() << "\n";
-			std::cout << "Price: " << shipFactory_.shipList[i - 1].get_price() << "\n";
-			std::cout << "Health: " << shipFactory_.shipList[i - 1].get_hp() << "\n";
-			std::cout << "Cannon slots: " << shipFactory_.shipList[i - 1].get_max_canons() << "\n";
-			std::cout << "Cargo space: " << shipFactory_.shipList[i - 1].get_max_items() << "\n";
-			std::cout << "misc: " << shipFactory_.shipList[i - 1].get_misc().GetString() << "\n";
+			MyRandom rand;
+			int x = rand.Range(0, 1);
+			if (x == 1)
+			{
+				MyString shipName = shipFactory_.shipList[i - 1].get_type();
+				std::cout << "====================================\n";
+				std::cout << "\t\t[" << i << "]\n";
+				std::cout << "Name: " << shipName.GetString() << "\n";
+				std::cout << "Price: " << shipFactory_.shipList[i - 1].get_price() << "\n";
+				std::cout << "Health: " << shipFactory_.shipList[i - 1].get_hp() << "\n";
+				std::cout << "Cannon slots: " << shipFactory_.shipList[i - 1].get_max_canons() << "\n";
+				std::cout << "Cargo space: " << shipFactory_.shipList[i - 1].get_max_items() << "\n";
+				std::cout << "misc: " << shipFactory_.shipList[i - 1].get_misc().GetString() << "\n";
+
+			}
+
 		}
 		std::cout << "====================================\n";
 		std::cout << "\t\t[0]\n";
