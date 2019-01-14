@@ -13,7 +13,7 @@ public:
 	int getQuantity() const { return quantity_; }
 	void add(int amount);
 	bool remove(int amount);
-
+	void setCanons(int c) { quantity_ = c; }
 private:
 	MyString type_;
 	int damage_ = 0;
