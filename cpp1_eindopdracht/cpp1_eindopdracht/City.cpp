@@ -74,24 +74,32 @@ void City::buyShip(Player& p)
 	{
 		system("CLS");
 	}
-
+	
 	int cmd;
 	while (true)
 	{
 		std::cout << "Which ship would you like to buy?\n";
 		std::cout << "You have: " << p.gold << " gold to spend\n";
 		std::cout << "Your current ship is: " << p.playerShip.get_type().GetString() << "\n";
+
 		for (auto i = 1; i < shipFactory_.shipList.get_size() + 1; i++)
 		{
-			MyString shipName = shipFactory_.shipList[i - 1].get_type();
-			std::cout << "====================================\n";
-			std::cout << "\t\t[" << i << "]\n";
-			std::cout << "Name: " << shipName.GetString() << "\n";
-			std::cout << "Price: " << shipFactory_.shipList[i - 1].get_price() << "\n";
-			std::cout << "Health: " << shipFactory_.shipList[i - 1].get_hp() << "\n";
-			std::cout << "Cannon slots: " << shipFactory_.shipList[i - 1].get_max_canons() << "\n";
-			std::cout << "Cargo space: " << shipFactory_.shipList[i - 1].get_max_items() << "\n";
-			std::cout << "misc: " << shipFactory_.shipList[i - 1].get_misc().GetString() << "\n";
+			MyRandom rand;
+			int x = rand.Range(0, 1);
+			if (x == 1)
+			{
+				MyString shipName = shipFactory_.shipList[i - 1].get_type();
+				std::cout << "====================================\n";
+				std::cout << "\t\t[" << i << "]\n";
+				std::cout << "Name: " << shipName.GetString() << "\n";
+				std::cout << "Price: " << shipFactory_.shipList[i - 1].get_price() << "\n";
+				std::cout << "Health: " << shipFactory_.shipList[i - 1].get_hp() << "\n";
+				std::cout << "Cannon slots: " << shipFactory_.shipList[i - 1].get_max_canons() << "\n";
+				std::cout << "Cargo space: " << shipFactory_.shipList[i - 1].get_max_items() << "\n";
+				std::cout << "misc: " << shipFactory_.shipList[i - 1].get_misc().GetString() << "\n";
+
+			}
+
 		}
 		std::cout << "====================================\n";
 		std::cout << "\t\t[0]\n";
@@ -126,6 +134,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getPinnace();
 			break;
 		case 2:
@@ -134,6 +143,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getSloep();
 			break;
 		case 3:
@@ -142,6 +152,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getBrigg();
 			break;
 		case 4:
@@ -150,6 +161,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getBarque();
 			break;
 		case 5:
@@ -158,6 +170,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getKorvet();
 			break;
 		case 6:
@@ -166,6 +179,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getFluyt();
 			break;
 		case 7:
@@ -174,6 +188,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getFregat();
 			break;
 		case 8:
@@ -182,6 +197,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getGaljoen();
 			break;
 		case 9:
@@ -190,6 +206,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getHandelsFluyt();
 			break;
 		case 10:
@@ -198,6 +215,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getCaravel();
 			break;
 		case 11:
@@ -206,6 +224,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getCarrack();
 			break;
 		case 12:
@@ -214,6 +233,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getOorlogsGaljoen();
 			break;
 		case 13:
@@ -222,6 +242,7 @@ void City::buyShip(Player& p)
 				std::cout << "You do not have enough gold to buy this ship \n";
 				continue;
 			}
+			p.gold += p.playerShip.get_price() / 2;
 			p.playerShip = shipFactory_.getShipOfTheLine();
 			break;
 		}
