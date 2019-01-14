@@ -106,7 +106,7 @@ void World::DoCityLogic()
 			std::cout << "[2] : buy cannons\n";
 			std::cout << "[3] : buy ship\n";
 			std::cout << "[4] : sail\n";
-			//std::cout << "[0] : quit game\n";
+			std::cout << "[0] : quit game\n";
 
 			int cmd;
 			while (true)
@@ -124,6 +124,9 @@ void World::DoCityLogic()
 
 			switch (cmd)
 			{
+			case 0:
+				player_.quit();
+				break;
 			case 1:
 				cities_[index].buyItems(player_);
 				break;
