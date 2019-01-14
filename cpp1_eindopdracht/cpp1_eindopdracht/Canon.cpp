@@ -7,7 +7,7 @@ Canon::Canon()
 {
 }
 
-Canon::Canon(const MyString & type, const int min, const int max)
+Canon::Canon(const MyString& type, const int min, const int max)
 {
 	type_ = type;
 	min_damage_ = min;
@@ -23,7 +23,8 @@ int Canon::getDamage() const
 {
 	MyRandom rand;
 	int totalDamage = 0;
-	for (int i = 0;i < quantity_;i++) {
+	for (int i = 0; i < quantity_; i++)
+	{
 		totalDamage += rand.Range(min_damage_, max_damage_);
 	}
 	return totalDamage;
@@ -36,7 +37,7 @@ void Canon::add(int amount)
 
 bool Canon::remove(int amount)
 {
-	if(amount > quantity_)
+	if (amount > quantity_)
 	{
 		return false;
 	}

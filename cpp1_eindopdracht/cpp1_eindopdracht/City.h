@@ -11,13 +11,13 @@ class City
 {
 public:
 	City() = default;
-	City(const MyString& name,const MyList<Ship>& shipList);
+	City(const MyString& name, const MyList<Ship>& shipList);
 	void EnterCity();
 	//City(const MyString& name,const MyList<Ship>& shipList);
 	MyString get_name() const;
 
-	int get_distance_index(const MyString & city_name);
-	int get_item_index(const MyString & item_name);
+	int get_distance_index(const MyString& city_name);
+	int get_item_index(const MyString& item_name);
 
 	MyList<ItemStock> items;
 	void buyShip(Player& p);

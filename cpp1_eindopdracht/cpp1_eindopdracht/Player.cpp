@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-	playerShip = Ship("test",100,100,4,100,MyString(""));
+	//playerShip = Ship("test", 100, 100, 4, 100, MyString(""));
 }
 
 bool Player::playerHasDied() const

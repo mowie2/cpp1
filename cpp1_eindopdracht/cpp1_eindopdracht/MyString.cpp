@@ -3,29 +3,37 @@
 #include <exception>
 
 
-MyString::MyString(const char *string) {
+MyString::MyString(const char* string)
+{
 	length_ = strchr(string, '\0') - string;
 	SetString(string, length_);
 }
 
-MyString::MyString(const char *string, const int length) {
+MyString::MyString(const char* string, const int length)
+{
 	SetString(string, length);
 }
 
-MyString::~MyString() {
+MyString::~MyString()
+{
 	delete[] string_;
 }
 
-MyString& MyString::operator=(const MyString & other) {
-	if (this != &other) {
+MyString& MyString::operator=(const MyString& other)
+{
+	if (this != &other)
+	{
 		SetString(other.string_, other.length_);
 	}
 	return *this;
 }
 
-MyString & MyString::operator=(MyString && other) {
-	if (this != &other) {
-		if (this->length_ >= 0) {
+MyString& MyString::operator=(MyString&& other)
+{
+	if (this != &other)
+	{
+		if (this->length_ >= 0)
+		{
 			delete[] this->string_;
 		}
 		this->string_ = other.string_;
@@ -36,7 +44,7 @@ MyString & MyString::operator=(MyString && other) {
 	return *this;
 }
 
-bool MyString::operator==(const MyString & other)
+bool MyString::operator==(const MyString& other)
 {
 	if (this->length_ == other.length_)
 	{
@@ -68,7 +76,8 @@ bool MyString::operator!=(const MyString& other)
 	return true;
 }
 
-MyString::MyString(const MyString & other) {
+MyString::MyString(const MyString& other)
+{
 	SetString(other.string_, other.length_);
 }
 
@@ -80,9 +89,10 @@ MyString::MyString(const MyString & other)
 }*/
 
 
-MyString::MyString(MyString && other)
+MyString::MyString(MyString&& other)
 {
-	if (this->length_ > 0) {
+	if (this->length_ > 0)
+	{
 		delete[] this->string_;
 	}
 	this->string_ = other.string_;
@@ -91,11 +101,11 @@ MyString::MyString(MyString && other)
 	other.length_ = 0;
 }
 
-bool MyString::equals(const MyString & other) const
+bool MyString::equals(const MyString& other) const
 {
 	if (this->length_ == other.length_)
 	{
-		for (int i = 0;i < length_;i++)
+		for (int i = 0; i < length_; i++)
 		{
 			if (this->string_[i] != other.string_[i])
 			{
@@ -107,12 +117,12 @@ bool MyString::equals(const MyString & other) const
 	return false;
 }
 
-bool MyString::equals(const char * other) const
+bool MyString::equals(const char* other) const
 {
 	const int other_length = strchr(other, '\0') - other;
 	if (this->length_ == other_length)
 	{
-		for (auto i = 0;i < length_;i++)
+		for (auto i = 0; i < length_; i++)
 		{
 			if (this->string_[i] != other[i])
 			{
@@ -124,17 +134,17 @@ bool MyString::equals(const char * other) const
 	return false;
 }
 
-bool MyString::contains(const MyString & other) const
+bool MyString::contains(const MyString& other) const
 {
-	if(this->length_>=other.length_)
+	if (this->length_ >= other.length_)
 	{
 		auto index = 0;
-		for (auto l = 0;l<length_;l++)
+		for (auto l = 0; l < length_; l++)
 		{
-			if(this->string_[l]==other.string_[index])
+			if (this->string_[l] == other.string_[index])
 			{
 				index++;
-				if(index == other.length_)
+				if (index == other.length_)
 				{
 					return true;
 				}
@@ -144,7 +154,7 @@ bool MyString::contains(const MyString & other) const
 	return false;
 }
 
-bool MyString::contains(const char * other) const
+bool MyString::contains(const char* other) const
 {
 	return contains(MyString(other));
 }
@@ -154,8 +164,10 @@ int MyString::Parse()
 	return atoi(string_);
 }
 
-char MyString::get_letter(int index) const {
-	if (index < length_ && index >= 0) {
+char MyString::get_letter(int index) const
+{
+	if (index < length_ && index >= 0)
+	{
 		return string_[index];
 	}
 	throw std::out_of_range("out of range");
@@ -164,7 +176,7 @@ char MyString::get_letter(int index) const {
 int MyString::get_occurrence(const char search) const
 {
 	auto count = 0;
-	for (auto i = 0;i < length_;i++)
+	for (auto i = 0; i < length_; i++)
 	{
 		if (string_[i] == search)
 		{
@@ -174,7 +186,8 @@ int MyString::get_occurrence(const char search) const
 	return count;
 }
 
-const char * MyString::GetString() const {
+const char* MyString::GetString() const
+{
 	return string_;
 }
 
@@ -185,7 +198,7 @@ MyList<int> MyString::get_occurrence_index(const char search) const
 	{
 		auto index = 0;
 		MyList<int> indexes(count);
-		for (auto i = 0;i < length_;i++)
+		for (auto i = 0; i < length_; i++)
 		{
 			if (string_[i] == search)
 			{
@@ -210,16 +223,20 @@ MyString MyString::subset(const int start, const int end) const
 	throw std::out_of_range("out of range");
 }
 
-int MyString::GetLength() const {
+int MyString::GetLength() const
+{
 	return length_;
 }
 
 
-void MyString::SetString(const char *string, int length) {
-	if (length < 0) {
+void MyString::SetString(const char* string, int length)
+{
+	if (length < 0)
+	{
 		throw std::exception("length may not be lower than 0");
 	}
-	if (this->length_ >= 0) {
+	if (this->length_ >= 0)
+	{
 		delete[] this->string_;
 	}
 	this->length_ = length;
@@ -227,4 +244,3 @@ void MyString::SetString(const char *string, int length) {
 	memcpy(this->string_, string, length);
 	this->string_[length] = '\0';
 }
-

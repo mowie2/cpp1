@@ -1,7 +1,7 @@
 #pragma once
 #include "MyString.h"
 #include "Ship.h"
-#include "City.h" 
+#include "City.h"
 #include "MyList.h"
 #include "Player.h"
 
@@ -9,18 +9,17 @@ class World
 {
 public:
 	World();
-	World(const World & other) = delete;
-	World(World && other) = delete;
-	World& operator= (World & other) = delete;
-	World& operator= (World && other) = delete;
+	World(const World& other) = delete;
+	World(World&& other) = delete;
+	World& operator=(World& other) = delete;
+	World& operator=(World&& other) = delete;
 	~World();
 
 	bool read();
 
 	int city_index(const char* name);
-	int getCityByName(const MyString &name);
+	int getCityByName(const MyString& name);
 
-	
 
 	void DoSeaLogic();
 	void DoCityLogic();
@@ -67,4 +66,3 @@ private:
 	int remainingDistance;
 	bool good_init_;
 };
-

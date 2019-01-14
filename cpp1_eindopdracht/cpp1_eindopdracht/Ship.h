@@ -3,11 +3,11 @@
 #include "Item.h"
 #include "Canon.h"
 
-class  Ship
+class Ship
 {
 public:
 	Ship() = default;
-	Ship(const MyString & type, const int price, const int capacity, const int max_canons, const int hp, const MyString& misc);
+	Ship(const MyString& type, int price, int capacity, int max_canons, int hp, const MyString& misc);
 	~Ship() = default;
 
 	MyString get_type() const;
@@ -18,12 +18,12 @@ public:
 	int get_max_hp() const;
 	void addhp(int hp);
 	MyString get_misc() const;
-	void takeDamage(const int damageAmount);
+	void takeDamage(int damageAmount);
 	MyList<Item> storage;
 
-	Canon getLightCanons()const;
-	Canon getMidCanons()const;
-	Canon getHeavyCanons()const;
+	Canon getLightCanons() const;
+	Canon getMidCanons() const;
+	Canon getHeavyCanons() const;
 	void addLightCannons(int c) { light_.add(c); }
 	void addMediumCannons(int c) { mid_.add(c); }
 	void addHeavyCannons(int c) { heavy_.add(c); }

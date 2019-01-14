@@ -22,6 +22,6 @@ public:
 	Ship getShipOfTheLine();
 	MyList<Ship> shipList;
 private:
-	
+
 	Ship GetShip(MyString name);
 };

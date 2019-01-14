@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "Ship.h"
 
-Ship::Ship(const MyString & type, const int price, const int capacity, const int max_canons, const int hp, const MyString & misc)
+Ship::Ship(const MyString& type, const int price, const int capacity, const int max_canons, const int hp,
+           const MyString& misc)
 {
 	this->shipName_ = type;
 	this->price_ = price;
@@ -60,7 +61,7 @@ void Ship::takeDamage(const int damageAmount)
 {
 	hp_ -= damageAmount;
 
-	if(hp_ < 0)
+	if (hp_ < 0)
 	{
 		hp_ = 0;
 	}
@@ -81,7 +82,7 @@ Canon Ship::getHeavyCanons() const
 	return heavy_;
 }
 
-int Ship::calculateFleeChance(const Ship & other) const
+int Ship::calculateFleeChance(const Ship& other) const
 {
 	if (characteristics_.contains("licht"))
 	{
@@ -94,7 +95,6 @@ int Ship::calculateFleeChance(const Ship & other) const
 			return 75;
 		}
 		return 60;
-
 	}
 	if (characteristics_.contains("log"))
 	{
@@ -108,7 +108,8 @@ int Ship::calculateFleeChance(const Ship & other) const
 		}
 		return 15;
 	}
-	if (characteristics_.equals("")) {
+	if (characteristics_.equals(""))
+	{
 		if (other.characteristics_.contains("licht"))
 		{
 			return 30;
@@ -124,12 +125,12 @@ int Ship::calculateFleeChance(const Ship & other) const
 
 int Ship::calculateDamage() const
 {
-	return light_.getDamage()+mid_.getDamage()+heavy_.getDamage();
+	return light_.getDamage() + mid_.getDamage() + heavy_.getDamage();
 }
 
 void Ship::empty()
 {
-	for(int i = 0;i<storage.get_size();i++)
+	for (int i = 0; i < storage.get_size(); i++)
 	{
 		storage[i].set_quantity(0);
 	}

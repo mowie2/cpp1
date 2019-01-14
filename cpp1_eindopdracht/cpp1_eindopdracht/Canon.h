@@ -5,7 +5,7 @@ class Canon
 {
 public:
 	Canon();
-	Canon(const MyString& type,const int min, const int max);
+	Canon(const MyString& type, int min, int max);
 	~Canon();
 
 	MyString getType() const { return type_; }
@@ -21,4 +21,3 @@ private:
 	int max_damage_ = 0;
 	int quantity_ = 0;
 };
-

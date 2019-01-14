@@ -2,13 +2,18 @@
 #include "Item.h"
 #include "Stock.h"
 
-class ItemStock:public Stock<Item>
+class ItemStock : public Stock<Item>
 {
 public:
-	
+
 	//CityStock() = default;
-	ItemStock() : Stock() {};
-	ItemStock(const Item& item) :Stock(item) {};
+	ItemStock() : Stock()
+	{
+	};
+
+	ItemStock(const Item& item) : Stock(item)
+	{
+	};
 	/*
 	Item& get_item();
 
@@ -27,4 +32,3 @@ private:
 	int min_price_ = 0;
 	int max_price_ = 0;*/
 };
-

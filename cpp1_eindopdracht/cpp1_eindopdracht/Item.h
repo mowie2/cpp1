@@ -8,10 +8,10 @@ public:
 
 	Item(const MyString& name);
 
-	Item(const Item&other);
-	Item& operator=(const Item&other);
-	Item(Item&&other);
-	Item& operator=(Item&&other);
+	Item(const Item& other);
+	Item& operator=(const Item& other);
+	Item(Item&& other);
+	Item& operator=(Item&& other);
 
 	MyString get_name() const;
 

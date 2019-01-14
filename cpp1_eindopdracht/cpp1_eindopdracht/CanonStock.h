@@ -5,8 +5,12 @@
 class CanonStock : public Stock<Canon>
 {
 public:
-	CanonStock() : Stock() {};
-	CanonStock(const Canon& canon) : Stock(canon) {};
+	CanonStock() : Stock()
+	{
+	};
+
+	CanonStock(const Canon& canon) : Stock(canon)
+	{
+	};
 	//CanonStock();
 };
-

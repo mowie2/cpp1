@@ -12,6 +12,7 @@ City::City(const MyString& name, const MyList<Ship>& shipList)
 	canons_[1] = CanonStock(Canon("middelgroot", 0, 3));
 	canons_[2] = CanonStock(Canon("zwaar", 0, 6));
 }
+
 /*
 void City::set_name(const MyString& name)
 {
@@ -39,12 +40,13 @@ void City::EnterCity()
 	canons_[2].get_item().setCanons(rand.Range(0, 2));
 	canons_[2].set_Price(1000);
 }
+
 MyString City::get_name() const
 {
 	return city_name_;
 }
 
-int City::get_distance_index(const MyString & city_name)
+int City::get_distance_index(const MyString& city_name)
 {
 	for (auto c = 0; c < distances.get_size(); c++)
 	{
@@ -56,7 +58,7 @@ int City::get_distance_index(const MyString & city_name)
 	return -1;
 }
 
-int City::get_item_index(const MyString & item_name)
+int City::get_item_index(const MyString& item_name)
 {
 	for (auto c = 0; c < items.get_size(); c++)
 	{
@@ -70,11 +72,11 @@ int City::get_item_index(const MyString & item_name)
 
 void City::buyShip(Player& p)
 {
-	if (system(NULL))
+	if (system(nullptr))
 	{
 		system("CLS");
 	}
-	
+
 	int cmd;
 	while (true)
 	{
@@ -97,16 +99,14 @@ void City::buyShip(Player& p)
 				std::cout << "Cannon slots: " << shipFactory_.shipList[i - 1].get_max_canons() << "\n";
 				std::cout << "Cargo space: " << shipFactory_.shipList[i - 1].get_max_items() << "\n";
 				std::cout << "misc: " << shipFactory_.shipList[i - 1].get_misc().GetString() << "\n";
-
 			}
-
 		}
 		std::cout << "====================================\n";
 		std::cout << "\t\t[0]\n";
 		std::cout << "\t      Return\n";
 		std::cin >> cmd;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -254,8 +254,7 @@ void City::buyShip(Player& p)
 
 void City::buyItems(Player& p)
 {
-
-	if (system(NULL))
+	if (system(nullptr))
 	{
 		system("CLS");
 	}
@@ -280,7 +279,7 @@ void City::buyItems(Player& p)
 		std::cout << "\t      Return\n";
 		std::cin >> cmd;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -315,7 +314,7 @@ void City::buyItems(Player& p)
 		std::cout << "How many would you like to buy?\n";
 		std::cin >> itemAmount;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -328,7 +327,7 @@ void City::buyItems(Player& p)
 		}
 		if (itemAmount == 0)
 		{
-			continue;;
+			continue;
 		}
 		auto item = items[cmd - 1];
 
@@ -345,21 +344,22 @@ void City::buyItems(Player& p)
 		}
 
 
-		if (item.get_Price()* itemAmount > p.gold)
+		if (item.get_Price() * itemAmount > p.gold)
 		{
-			std::cout << "You do not have enough gold to buy this amount of " << item.get_item().get_name().GetString() << "\n";
+			std::cout << "You do not have enough gold to buy this amount of " << item.get_item().get_name().GetString()
+				<< "\n";
 			continue;
 		}
 
 		p.playerShip.storage[cmd - 1].set_quantity(p.playerShip.storage[cmd - 1].get_quantity() + itemAmount);
-		p.gold -= item.get_Price()* itemAmount;
+		p.gold -= item.get_Price() * itemAmount;
 		items[cmd - 1].get_item().set_quantity(items[cmd - 1].get_item().get_quantity() - itemAmount);
 	}
 }
 
 void City::sellItems(Player& p)
 {
-	if (system(NULL))
+	if (system(nullptr))
 	{
 		system("CLS");
 	}
@@ -384,7 +384,7 @@ void City::sellItems(Player& p)
 		std::cout << "\t      Return\n";
 		std::cin >> cmd;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -417,7 +417,7 @@ void City::sellItems(Player& p)
 		std::cout << "How many would you like to sell?\n";
 		std::cin >> itemAmount;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -430,7 +430,7 @@ void City::sellItems(Player& p)
 		}
 		if (itemAmount == 0)
 		{
-			continue;;
+			continue;
 		}
 		auto item = items[cmd - 1];
 
@@ -441,12 +441,12 @@ void City::sellItems(Player& p)
 		}
 
 		p.playerShip.storage[cmd - 1].set_quantity(p.playerShip.storage[cmd - 1].get_quantity() - itemAmount);
-		p.gold += item.get_Price()* itemAmount;
+		p.gold += item.get_Price() * itemAmount;
 		items[cmd - 1].get_item().set_quantity(items[cmd - 1].get_item().get_quantity() + itemAmount);
 	}
 }
 
-Distance City::getDisance(const MyString & cityName) const
+Distance City::getDisance(const MyString& cityName) const
 {
 	for (int i = 0; i < distances.get_size() - 1; i++)
 	{
@@ -460,7 +460,7 @@ Distance City::getDisance(const MyString & cityName) const
 
 void City::buyCannons(Player& p)
 {
-	if (system(NULL))
+	if (system(nullptr))
 	{
 		system("CLS");
 	}
@@ -485,7 +485,7 @@ void City::buyCannons(Player& p)
 		std::cout << "\t      Return\n";
 		std::cin >> cmd;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -506,7 +506,9 @@ void City::buyCannons(Player& p)
 			continue;
 		}
 
-		int currentShipCannons = (p.playerShip.getLightCanons().getQuantity() + p.playerShip.getMidCanons().getQuantity() + p.playerShip.getHeavyCanons().getQuantity());
+		int currentShipCannons = (p.playerShip.getLightCanons().getQuantity() + p
+		                                                                        .playerShip.getMidCanons().getQuantity()
+			+ p.playerShip.getHeavyCanons().getQuantity());
 
 
 		std::cout << "you have selected: " << canons_[cmd - 1].get_item().getType().GetString() << "\n";
@@ -514,7 +516,7 @@ void City::buyCannons(Player& p)
 		std::cout << "How many would you like to buy?\n";
 		std::cin >> itemAmount;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -527,13 +529,14 @@ void City::buyCannons(Player& p)
 		}
 		if (itemAmount == 0)
 		{
-			continue;;
+			continue;
 		}
 		auto item = canons_[cmd - 1];
 
 		if (canons_[cmd - 1].get_item().getQuantity() < itemAmount)
 		{
-			std::cout << "The city does not have enough " << canons_[cmd - 1].get_item().getType().GetString() << " canons\n";
+			std::cout << "The city does not have enough " << canons_[cmd - 1].get_item().getType().GetString() <<
+				" canons\n";
 			continue;
 		}
 
@@ -568,14 +571,12 @@ void City::buyCannons(Player& p)
 		{
 			p.playerShip.addHeavyCannons(itemAmount);
 		}
-
-
 	}
 }
 
 void City::sellCannons(Player& p)
 {
-	if (system(NULL))
+	if (system(nullptr))
 	{
 		system("CLS");
 	}
@@ -608,7 +609,7 @@ void City::sellCannons(Player& p)
 		std::cout << "\t      Return\n";
 		std::cin >> cmd;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -629,7 +630,9 @@ void City::sellCannons(Player& p)
 			continue;
 		}
 
-		int currentShipCannons = (p.playerShip.getLightCanons().getQuantity() + p.playerShip.getMidCanons().getQuantity() + p.playerShip.getHeavyCanons().getQuantity());
+		int currentShipCannons = (p.playerShip.getLightCanons().getQuantity() + p
+		                                                                        .playerShip.getMidCanons().getQuantity()
+			+ p.playerShip.getHeavyCanons().getQuantity());
 
 
 		std::cout << "you have selected: " << canons_[cmd - 1].get_item().getType().GetString() << "\n";
@@ -639,7 +642,7 @@ void City::sellCannons(Player& p)
 		std::cout << "How many would you like to sell?\n";
 		std::cin >> itemAmount;
 
-		if (system(NULL))
+		if (system(nullptr))
 		{
 			system("CLS");
 		}
@@ -652,7 +655,7 @@ void City::sellCannons(Player& p)
 		}
 		if (itemAmount == 0)
 		{
-			continue;;
+			continue;
 		}
 		auto item = canons_[cmd - 1];
 
@@ -671,7 +674,5 @@ void City::sellCannons(Player& p)
 		{
 			p.playerShip.removeHeavyCannons(itemAmount);
 		}
-
-
 	}
 }

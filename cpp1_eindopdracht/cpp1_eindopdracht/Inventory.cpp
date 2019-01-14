@@ -25,7 +25,6 @@ void Inventory::add(MyString name, int amount)
 			items_[x].itemAmount += amount;
 		}
 	}*/
-	
 }
 
 void Inventory::remove(MyString name, int amount)

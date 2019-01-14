@@ -1,7 +1,7 @@
 #pragma once
 #include <exception>
 
-template<typename T>
+template <typename T>
 class MyList
 {
 public:
@@ -9,14 +9,15 @@ public:
 
 	MyList(int size)
 	{
-		if (size < 0) {
+		if (size < 0)
+		{
 			throw std::exception("size may not be lower than 0");
 		}
 		this->size_ = size;
 		this->list_ = new T[size];
 	}
 
-	MyList(const MyList & other)
+	MyList(const MyList& other)
 	{
 		if (size_ >= 0)
 		{
@@ -24,13 +25,13 @@ public:
 		}
 		size_ = other.size_;
 		list_ = new T[size_];
-		for (auto element = 0;element < size_;element++)
+		for (auto element = 0; element < size_; element++)
 		{
 			list_[element] = other.list_[element];
 		}
 	}
 
-	MyList(MyList && other)
+	MyList(MyList&& other)
 	{
 		if (size_ >= 0)
 		{
@@ -42,7 +43,7 @@ public:
 		other.size_ = 0;
 	}
 
-	MyList & operator=(const MyList & other)
+	MyList& operator=(const MyList& other)
 	{
 		if (this != &other)
 		{
@@ -52,7 +53,7 @@ public:
 			}
 			size_ = other.size_;
 			list_ = new T[size_];
-			for (auto element = 0;element < size_;element++)
+			for (auto element = 0; element < size_; element++)
 			{
 				list_[element] = other.list_[element];
 			}
@@ -60,7 +61,7 @@ public:
 		return *this;
 	}
 
-	MyList & operator=(MyList && other)
+	MyList& operator=(MyList&& other)
 	{
 		if (this != &other)
 		{
@@ -76,7 +77,8 @@ public:
 		return *this;
 	}
 
-	~MyList() {
+	~MyList()
+	{
 		delete[] list_;
 	}
 
@@ -107,4 +109,3 @@ private:
 	int size_ = 0;
 	T* list_ = nullptr;
 };
-
