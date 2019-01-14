@@ -291,6 +291,25 @@ void World::DoCombatLogic()
 	MyRandom rand;
 	int index = rand.Range(0, ships_.get_size() - 1);
 	Ship pirateShip = ships_[index];
+	if(pirateShip.get_type().contains("licht"))
+	{
+		const auto a = rand.Range(0, pirateShip.get_max_canons());
+		pirateShip.addLightCannons(a);
+		const auto newMax = pirateShip.get_max_canons() - a;
+		pirateShip.addMediumCannons(rand.Range(0,newMax));
+	}else
+	{
+		const auto a = rand.Range(0, pirateShip.get_max_canons());
+		pirateShip.addLightCannons(a);
+		auto newMax = pirateShip.get_max_canons() - a;
+		const auto b = rand.Range(0, newMax);
+		pirateShip.addMediumCannons(rand.Range(0, b));
+		newMax = pirateShip.get_max_canons() - a - b;
+		const auto c = rand.Range(0, newMax);
+		pirateShip.addMediumCannons(rand.Range(0, c));
+	}
+
+
 
 	const auto fleeChance = player_.playerShip.calculateFleeChance(pirateShip);
 
@@ -309,7 +328,7 @@ void World::DoCombatLogic()
 		std::cout << "hp   : " << pirateShip.get_hp() << '\n';
 		std::cout << "Amount Canons :\n";
 		std::cout << pirateShip.getHeavyCanons().getQuantity() << " : " << pirateShip.getHeavyCanons().getType().GetString() << '\n';
-		std::cout << pirateShip.getLightCanons().getQuantity() << " : " << pirateShip.getLightCanons().getType().GetString() << '\n';
+		std::cout << pirateShip.getMidCanons().getQuantity() << " : " << pirateShip.getMidCanons().getType().GetString() << '\n';
 		std::cout << pirateShip.getLightCanons().getQuantity() << " : " << pirateShip.getLightCanons().getType().GetString() << '\n';
 		std::cout << "====================================\n";
 
@@ -318,7 +337,7 @@ void World::DoCombatLogic()
 		std::cout << "hp   : " << player_.playerShip.get_hp() << '\n';
 		std::cout << "Amount Canons :\n";
 		std::cout << player_.playerShip.getHeavyCanons().getQuantity() << " : " << player_.playerShip.getHeavyCanons().getType().GetString() << '\n';
-		std::cout << player_.playerShip.getLightCanons().getQuantity() << " : " << player_.playerShip.getLightCanons().getType().GetString() << '\n';
+		std::cout << player_.playerShip.getMidCanons().getQuantity() << " : " << player_.playerShip.getMidCanons().getType().GetString() << '\n';
 		std::cout << player_.playerShip.getLightCanons().getQuantity() << " : " << player_.playerShip.getLightCanons().getType().GetString() << '\n';
 		std::cout << "====================================\n\n";
 
@@ -351,8 +370,8 @@ void World::DoCombatLogic()
 			pirateShip.takeDamage(damage);
 			std::cout << "You did %" << damage << " damage to the pirates\n";
 			player_.playerShip.takeDamage(pirateDamage);
-			std::cout << "The pirates did %" << pirateDamage << " damage to your ship\n";
-			std::cout << "press enter to continue\n";
+			std::cout << "The pirates did " << pirateDamage << " damage to your ship\n";
+			//std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		case 2:
@@ -371,10 +390,10 @@ void World::DoCombatLogic()
 			std::cin.get();
 			break;
 		case 3:
-			//todo steal cargo
+			player_.playerShip.empty();
 			std::cout << "The pirates let you go but steal all your cargo\n";
 			fighting = false;
-			std::cout << "press enter to continue\n";
+			//std::cout << "press enter to continue\n";
 			std::cin.get();
 			break;
 		default:

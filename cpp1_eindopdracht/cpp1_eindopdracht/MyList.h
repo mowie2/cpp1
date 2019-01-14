@@ -80,7 +80,7 @@ public:
 		delete[] list_;
 	}
 
-	T& operator[](const int index) const
+	T& operator[](const int index)
 	{
 		if (index >= 0 && index < size_)
 		{

@@ -32,7 +32,7 @@ public:
 
 	int calculateFleeChance(const Ship& other) const;
 	int calculateDamage() const;
-private:
+	void empty();
 	Canon light_;
 	Canon mid_;
 	Canon heavy_;

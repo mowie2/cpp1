@@ -115,3 +115,11 @@ int Ship::calculateDamage() const
 {
 	return light_.getDamage()+mid_.getDamage()+heavy_.getDamage();
 }
+
+void Ship::empty()
+{
+	for(int i = 0;i<storage.get_size();i++)
+	{
+		storage[i].set_quantity(0);
+	}
+}
