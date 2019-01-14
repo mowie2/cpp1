@@ -41,9 +41,13 @@ void World::start()
 			{
 				std::cout << "Congratulations you have 1 million gold and won the game!!!\n";
 			}
-			else
+			else if(player_.playerHasDied())
 			{
 				std::cout << "Your ship has sunk\n";
+			} 
+			else
+			{
+				std::cout << "Bye Bye\n";
 			}
 			return;
 		}
